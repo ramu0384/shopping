@@ -1,8 +1,8 @@
-shopping / index.html
 <!DOCTYPE html>
 <html>
 <head>
   <title>My Shop</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,6 +24,12 @@ shopping / index.html
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
+    .product img {
+      width: 200px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
     .price {
       font-size: 20px;
       color: green;
@@ -33,17 +39,20 @@ shopping / index.html
 </head>
 
 <body>
+
   <h1>Welcome to My Shop</h1>
 
   <div class="product">
-    <h2>Cubing mat</h2>
-    <p class="price">100k</p>
+    <img src="images/1.jpg" alt="Speed Cube">
+    <h2>Speed Cube</h2>
+    <p class="price">$15</p>
   </div>
 
   <div class="product">
+    <img src="images/2.jpg" alt="Stackmat Gen 5">
     <h2>Stackmat Gen 5</h2>
-    <p class="price">800k</p>
+    <p class="price">$100</p>
   </div>
+
 </body>
 </html>
-
