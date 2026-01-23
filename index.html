@@ -38,13 +38,6 @@
       padding: 30px;
     }
 
-    .search-box {
-      width: 300px;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 30px;
-    }
-
     .products {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -59,46 +52,43 @@
       text-align: center;
     }
 
-    /* MAGNIFIER CONTAINER */
-    .img-zoom-container {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-    }
-
-    .img-zoom-container img {
+    .product img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      display: block;
-    }
-
-    /* LENS */
-    .img-zoom-lens {
-      position: absolute;
-      border: 2px solid #000;
-      width: 60px;
-      height: 60px;
-      background: rgba(255,255,255,0.3);
-      display: none;
-      cursor: none;
-    }
-
-    /* ZOOM RESULT */
-    .img-zoom-result {
-      position: absolute;
-      right: -220px;
-      top: 0;
-      width: 200px;
-      height: 200px;
-      border: 2px solid #000;
-      background-repeat: no-repeat;
-      display: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
     .price {
       color: green;
       font-weight: bold;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .zoom-wrapper {
+      width: 500px;
+      height: 500px;
+      overflow: hidden;
+      background: white;
+      border-radius: 12px;
+    }
+
+    .zoom-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.05s linear;
     }
   </style>
 </head>
@@ -111,33 +101,26 @@
   <div class="submenu" id="A">
     <div>A1. Cubing Mat</div>
     <div>A2. Speed Cube</div>
-    <div>A3. Cube Lube</div>
-  </div>
-
-  <div class="menu-item" onclick="toggleMenu('B')">B. Timers</div>
-  <div class="submenu" id="B">
-    <div>B1. Stackmat Gen 5</div>
-    <div>B2. Smart Timer</div>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
-
-  <input class="search-box" placeholder="Search products..." onkeyup="searchProducts()">
-
   <div class="products">
 
-    <div class="product" data-name="cubing mat">
-      <div class="img-zoom-container">
-        <img src="images/1.webp" onmousemove="zoom(event,this)" onmouseenter="showZoom(this)" onmouseleave="hideZoom(this)">
-        <div class="img-zoom-lens"></div>
-        <div class="img-zoom-result"></div>
-      </div>
+    <div class="product">
+      <img src="images/1.webp" onclick="openZoom(this)">
       <h3>A1. Cubing Mat</h3>
       <p class="price">169k</p>
     </div>
 
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="zoomModal" onclick="closeZoom()">
+  <div class="zoom-wrapper" onclick="event.stopPropagation()">
+    <img id="zoomImg" onmousemove="moveZoom(event)">
   </div>
 </div>
 
@@ -147,46 +130,26 @@
     m.style.display = m.style.display === "block" ? "none" : "block";
   }
 
-  function searchProducts() {
-    const v = document.querySelector(".search-box").value.toLowerCase();
-    document.querySelectorAll(".product").forEach(p => {
-      p.style.display = p.dataset.name.includes(v) ? "block" : "none";
-    });
+  function openZoom(img) {
+    const zoomImg = document.getElementById("zoomImg");
+    zoomImg.src = img.src;
+    zoomImg.style.transform = "scale(1)";
+    document.getElementById("zoomModal").style.display = "flex";
   }
 
-  function showZoom(img) {
-    const c = img.parentElement;
-    c.querySelector(".img-zoom-lens").style.display = "block";
-    c.querySelector(".img-zoom-result").style.display = "block";
-    c.querySelector(".img-zoom-result").style.backgroundImage = `url('${img.src}')`;
-    c.querySelector(".img-zoom-result").style.backgroundSize = "300%";
+  function closeZoom() {
+    document.getElementById("zoomModal").style.display = "none";
   }
 
-  function hideZoom(img) {
-    const c = img.parentElement;
-    c.querySelector(".img-zoom-lens").style.display = "none";
-    c.querySelector(".img-zoom-result").style.display = "none";
-  }
-
-  function zoom(e, img) {
-    const c = img.parentElement;
-    const lens = c.querySelector(".img-zoom-lens");
-    const result = c.querySelector(".img-zoom-result");
-
+  function moveZoom(e) {
+    const img = e.target;
     const rect = img.getBoundingClientRect();
-    let x = e.clientX - rect.left - lens.offsetWidth / 2;
-    let y = e.clientY - rect.top - lens.offsetHeight / 2;
 
-    x = Math.max(0, Math.min(x, img.width - lens.offsetWidth));
-    y = Math.max(0, Math.min(y, img.height - lens.offsetHeight));
+    const x = (e.clientX - rect.left) / rect.width * 100;
+    const y = (e.clientY - rect.top) / rect.height * 100;
 
-    lens.style.left = x + "px";
-    lens.style.top = y + "px";
-
-    const fx = result.offsetWidth / lens.offsetWidth;
-    const fy = result.offsetHeight / lens.offsetHeight;
-
-    result.style.backgroundPosition = `-${x * fx}px -${y * fy}px`;
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = "scale(2)";
   }
 </script>
 
