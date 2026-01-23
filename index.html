@@ -7,25 +7,25 @@
 <style>
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   display: flex;
   background: #f4f4f4;
 }
 
-/* ===== SIDEBAR ===== */
+/* ===== LEFT MENU ===== */
 .sidebar {
   width: 220px;
   background: #222;
   color: white;
   padding: 20px;
-  height: 100vh;           /* FULL HEIGHT */
+  height: 100vh; /* full height */
   box-sizing: border-box;
 }
 
 .menu-item {
+  font-weight: bold;
   cursor: pointer;
   margin: 12px 0;
-  font-weight: bold;
 }
 
 .submenu {
@@ -43,7 +43,7 @@ body {
   color: white;
 }
 
-/* ===== CONTENT ===== */
+/* ===== MAIN CONTENT ===== */
 .content {
   flex: 1;
   padding: 30px;
@@ -56,7 +56,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* GRID */
+/* PRODUCTS GRID */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -68,27 +68,14 @@ body {
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-/* ===== IMAGE ZOOM SYSTEM ===== */
-.image-box {
+/* CLICKABLE IMAGE */
+.product img {
   width: 100%;
-  height: 200px;
-  overflow: hidden;
   border-radius: 10px;
-  cursor: zoom-in;
-}
-
-.image-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.15s;
-}
-
-/* ZOOM ENABLED ONLY AFTER CLICK */
-.image-box.active img {
-  transform: scale(2);
+  cursor: pointer;
 }
 
 .price {
@@ -122,25 +109,25 @@ body {
 <div class="products">
 
   <div class="product" data-name="cubing mat" data-category="a1">
-    <div class="image-box">
-      <img src="images/3.jpg">
-    </div>
+    <a href="#">
+      <img src="images/3.jpg" alt="Cubing Mat">
+    </a>
     <h3>Cubing Mat</h3>
     <p class="price">169k</p>
   </div>
 
   <div class="product" data-name="speed cube" data-category="a2">
-    <div class="image-box">
-      <img src="images/1.webp">
-    </div>
+    <a href="#">
+      <img src="images/1.webp" alt="Speed Cube">
+    </a>
     <h3>Speed Cube</h3>
     <p class="price">250k</p>
   </div>
 
   <div class="product" data-name="timer" data-category="b1">
-    <div class="image-box">
-      <img src="images/2.jpg">
-    </div>
+    <a href="#">
+      <img src="images/2.jpg" alt="Timer">
+    </a>
     <h3>Timer</h3>
     <p class="price">300k</p>
   </div>
@@ -149,13 +136,13 @@ body {
 </div>
 
 <script>
-/* MENU */
+/* TOGGLE LEFT MENU */
 function toggleMenu(id) {
   const menu = document.getElementById(id);
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* FILTER */
+/* FILTER BY CATEGORY */
 function filterProducts(category) {
   document.getElementById("search").value = "";
   document.querySelectorAll(".product").forEach(p => {
@@ -170,23 +157,6 @@ function searchProduct() {
     p.style.display = p.dataset.name.includes(input) ? "block" : "none";
   });
 }
-
-/* CLICK → ENABLE ZOOM */
-document.querySelectorAll('.image-box').forEach(box => {
-  box.addEventListener('click', () => {
-    box.classList.toggle('active');
-  });
-
-  box.addEventListener('mousemove', e => {
-    if (!box.classList.contains('active')) return;
-
-    const img = box.querySelector('img');
-    const rect = box.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    img.style.transformOrigin = `${x}% ${y}%`;
-  });
-});
 </script>
 
 </body>
