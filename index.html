@@ -8,8 +8,8 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: #f4f4f4;
   display: flex;
+  background: #f4f4f4;
 }
 
 /* ===== SIDEBAR ===== */
@@ -18,13 +18,13 @@ body {
   background: #222;
   color: white;
   padding: 20px;
-  position: relative;
-  z-index: 10;
+  height: 100vh;           /* FULL HEIGHT */
+  box-sizing: border-box;
 }
 
 .menu-item {
   cursor: pointer;
-  margin: 10px 0;
+  margin: 12px 0;
   font-weight: bold;
 }
 
@@ -36,7 +36,7 @@ body {
 .submenu div {
   cursor: pointer;
   color: #ccc;
-  margin: 5px 0;
+  margin: 6px 0;
 }
 
 .submenu div:hover {
@@ -70,23 +70,25 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* IMAGE ZOOM */
+/* ===== IMAGE ZOOM SYSTEM ===== */
 .image-box {
   width: 100%;
   height: 200px;
   overflow: hidden;
   border-radius: 10px;
+  cursor: zoom-in;
 }
 
 .image-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.1s;
+  transition: transform 0.15s;
 }
 
-.image-box:hover img {
-  transform: scale(1.8);
+/* ZOOM ENABLED ONLY AFTER CLICK */
+.image-box.active img {
+  transform: scale(2);
 }
 
 .price {
@@ -98,6 +100,7 @@ body {
 
 <body>
 
+<!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
   <div class="menu-item" onclick="toggleMenu('a')">A</div>
   <div class="submenu" id="a">
@@ -111,46 +114,48 @@ body {
   </div>
 </div>
 
+<!-- ===== CONTENT ===== -->
 <div class="content">
 
-  <!-- SEARCHER -->
-  <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
 
-  <div class="products">
+<div class="products">
 
-    <div class="product" data-name="cubing mat" data-category="a1">
-      <div class="image-box">
-        <img src="images/3.jpg">
-      </div>
-      <h3>Cubing Mat</h3>
-      <p class="price">169k</p>
+  <div class="product" data-name="cubing mat" data-category="a1">
+    <div class="image-box">
+      <img src="images/3.jpg">
     </div>
-
-    <div class="product" data-name="speed cube" data-category="a2">
-      <div class="image-box">
-        <img src="images/1.webp">
-      </div>
-      <h3>Speed Cube</h3>
-      <p class="price">250k</p>
-    </div>
-
-    <div class="product" data-name="timer" data-category="b1">
-      <div class="image-box">
-        <img src="images/2.jpg">
-      </div>
-      <h3>Timer</h3>
-      <p class="price">300k</p>
-    </div>
-
+    <h3>Cubing Mat</h3>
+    <p class="price">169k</p>
   </div>
+
+  <div class="product" data-name="speed cube" data-category="a2">
+    <div class="image-box">
+      <img src="images/1.webp">
+    </div>
+    <h3>Speed Cube</h3>
+    <p class="price">250k</p>
+  </div>
+
+  <div class="product" data-name="timer" data-category="b1">
+    <div class="image-box">
+      <img src="images/2.jpg">
+    </div>
+    <h3>Timer</h3>
+    <p class="price">300k</p>
+  </div>
+
+</div>
 </div>
 
 <script>
+/* MENU */
 function toggleMenu(id) {
   const menu = document.getElementById(id);
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
+/* FILTER */
 function filterProducts(category) {
   document.getElementById("search").value = "";
   document.querySelectorAll(".product").forEach(p => {
@@ -158,6 +163,7 @@ function filterProducts(category) {
   });
 }
 
+/* SEARCH */
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
@@ -165,9 +171,15 @@ function searchProduct() {
   });
 }
 
-/* CURSOR ZOOM */
+/* CLICK → ENABLE ZOOM */
 document.querySelectorAll('.image-box').forEach(box => {
+  box.addEventListener('click', () => {
+    box.classList.toggle('active');
+  });
+
   box.addEventListener('mousemove', e => {
+    if (!box.classList.contains('active')) return;
+
     const img = box.querySelector('img');
     const rect = box.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
