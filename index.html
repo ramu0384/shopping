@@ -18,33 +18,30 @@ body {
   background: #222;
   color: white;
   padding: 20px;
-  box-sizing: border-box;
+  height: 100vh;
   position: sticky;
   top: 0;
-  height: 100vh;
   overflow-y: auto;
 }
 
-.menu-title {
-  font-size: 18px;
+.menu-item {
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 10px;
 }
 
 .menu-images {
-  display: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .menu-images img {
   width: 100%;
   height: 60px;
   object-fit: cover;
-  border-radius: 6px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 /* ===== CONTENT ===== */
@@ -57,10 +54,10 @@ body {
   width: 300px;
   padding: 10px;
   font-size: 16px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
-/* ===== PRODUCTS GRID ===== */
+/* PRODUCTS GRID */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -70,7 +67,7 @@ body {
 .product {
   background: white;
   padding: 15px;
-  border-radius: 12px;
+  border-radius: 14px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   text-align: center;
 }
@@ -81,13 +78,36 @@ body {
   cursor: pointer;
 }
 
-.product h3 {
-  margin: 10px 0 5px;
-}
-
 .price {
   color: green;
   font-weight: bold;
+}
+
+/* ===== IMAGE VIEWER ===== */
+#viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#viewer img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  background: white;
+}
+
+#closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -96,23 +116,23 @@ body {
 
 <!-- ===== LEFT MENU ===== -->
 <div class="sidebar">
-  <div class="menu-title" onclick="toggleMenu()">Đá 60x60</div>
+  <div class="menu-item">Đá 60x60</div>
 
-  <div class="menu-images" id="stoneMenu">
-    <img src="images/1.jpg" onclick="showAll()">
-    <img src="images/2.jpg" onclick="showAll()">
-    <img src="images/3.jpg" onclick="showAll()">
-    <img src="images/4.jpg" onclick="showAll()">
-    <img src="images/5.jpg" onclick="showAll()">
-    <img src="images/6.jpg" onclick="showAll()">
-    <img src="images/7.jpg" onclick="showAll()">
-    <img src="images/8.jpg" onclick="showAll()">
-    <img src="images/9.jpg" onclick="showAll()">
-    <img src="images/10.jpg" onclick="showAll()">
-    <img src="images/11.jpg" onclick="showAll()">
-    <img src="images/12.jpg" onclick="showAll()">
-    <img src="images/13.jpg" onclick="showAll()">
-    <img src="images/14.jpg" onclick="showAll()">
+  <div class="menu-images">
+    <img src="images/1.jpg">
+    <img src="images/2.jpg">
+    <img src="images/3.jpg">
+    <img src="images/4.jpg">
+    <img src="images/5.jpg">
+    <img src="images/6.jpg">
+    <img src="images/7.jpg">
+    <img src="images/8.jpg">
+    <img src="images/9.jpg">
+    <img src="images/10.jpg">
+    <img src="images/11.jpg">
+    <img src="images/12.jpg">
+    <img src="images/13.jpg">
+    <img src="images/14.jpg">
   </div>
 </div>
 
@@ -123,55 +143,52 @@ body {
 
 <div class="products">
 
-  <!-- PRODUCT TEMPLATE -->
   <div class="product" data-name="MH6024">
-    <a href="images/1.jpg" target="_blank">
-      <img src="images/1.jpg">
-    </a>
+    <img src="images/1.jpg" onclick="openViewer(this.src)">
     <h3>MH6024</h3>
     <p class="price">160k</p>
   </div>
 
   <div class="product" data-name="MECO643">
-    <a href="images/2.jpg" target="_blank">
-      <img src="images/2.jpg">
-    </a>
+    <img src="images/2.jpg" onclick="openViewer(this.src)">
     <h3>MECO643</h3>
     <p class="price">160k</p>
   </div>
 
-  <div class="product" data-name="MDL6001">
-    <a href="images/3.jpg" target="_blank">
-      <img src="images/3.jpg">
-    </a>
-    <h3>MDL6001</h3>
+  <div class="product" data-name="MH6028">
+    <img src="images/3.jpg" onclick="openViewer(this.src)">
+    <h3>MH6028</h3>
     <p class="price">160k</p>
   </div>
 
-  <!-- repeat same pattern for others -->
-
+  <!-- COPY MORE PRODUCTS SAME WAY -->
 </div>
+</div>
+
+<!-- ===== IMAGE VIEWER ===== -->
+<div id="viewer" onclick="closeViewer()">
+  <span id="closeBtn">✕</span>
+  <img id="viewerImg">
 </div>
 
 <script>
-function toggleMenu() {
-  const menu = document.getElementById("stoneMenu");
-  menu.style.display = menu.style.display === "grid" ? "none" : "grid";
-}
-
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    const name = p.dataset.name.toLowerCase();
-    p.style.display = name.includes(input) ? "" : "none";
+    p.style.display = p.dataset.name.toLowerCase().includes(input)
+      ? "block"
+      : "none";
   });
 }
 
-function showAll() {
-  document.getElementById("search").value = "";
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display = "";
-  });
+/* IMAGE VIEWER */
+function openViewer(src) {
+  document.getElementById("viewerImg").src = src;
+  document.getElementById("viewer").style.display = "flex";
+}
+
+function closeViewer() {
+  document.getElementById("viewer").style.display = "none";
 }
 </script>
 
