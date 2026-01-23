@@ -1,36 +1,190 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Brick Catalog</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>My Shop</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  background: #f4f4f4;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 240px;
+  background: #222;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.menu-title {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0 10px;
+}
+
+.menu-images {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.menu-images img {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  flex: 1;
+  padding: 30px;
+}
+
+#search {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+/* ===== PRODUCTS ===== */
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product {
+  display: none;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product img {
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar">
 
-  <!-- LEFT MENU -->
-  <aside class="sidebar">
-    <h2>Danh mục</h2>
-    <ul>
-      <li onclick="showCategory('porcelain')">Porcelain</li>
-      <li onclick="showCategory('da')">Đá</li>
-    </ul>
-  </aside>
+  <div class="menu-title" onclick="toggleMenu('daMenu'); showCategory('da')">
+    Đá 60x60
+  </div>
+  <div class="menu-images" id="daMenu">
+    <img src="images/1.jpg">
+    <img src="images/2.jpg">
+    <img src="images/3.jpg">
+    <img src="images/4.jpg">
+    <img src="images/5.jpg">
+    <img src="images/6.jpg">
+    <img src="images/7.jpg">
+    <img src="images/8.jpg">
+    <img src="images/9.jpg">
+    <img src="images/10.jpg">
+    <img src="images/11.jpg">
+    <img src="images/12.jpg">
+    <img src="images/13.jpg">
+    <img src="images/14.jpg">
+  </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <h2 id="title">Chọn danh mục</h2>
-    <div id="grid" class="grid"></div>
-  </main>
+  <div class="menu-title" onclick="toggleMenu('porMenu'); showCategory('porcelain')">
+    Porcelan 60x60
+  </div>
+  <div class="menu-images" id="porMenu">
+    <!-- images giữ nguyên -->
+    <img src="images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg">
+    <!-- (các ảnh khác giữ nguyên như file của bạn) -->
+  </div>
 
 </div>
 
-<!-- IMAGE VIEWER -->
-<div id="viewer" class="viewer" onclick="closeViewer()">
-  <img id="viewerImg">
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content">
+
+<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+
+<div class="products" id="products"></div>
+
 </div>
 
-<script src="script.js"></script>
+<script>
+const productsBox = document.getElementById("products");
+let currentCategory = "";
+
+/* ===== ADD PRODUCT (NO PRICE) ===== */
+function addProduct(img, name, cat) {
+  const d = document.createElement("div");
+  d.className = "product";
+  d.dataset.category = cat;
+  d.dataset.name = name.toLowerCase();
+  d.innerHTML = `
+    <img src="${img}">
+    <h3>${name}</h3>
+  `;
+  productsBox.appendChild(d);
+}
+
+/* ===== ĐÁ PRODUCTS ===== */
+const daNames = [
+  "MH6024","MECO643","MH6028","MH6025","MH6034",
+  "MDL6001","MDL6002","MDL6003","MH6031",
+  "MDL6004","MDL6005","MDL6006","MDL6007","MDL6008"
+];
+
+daNames.forEach((name, i) => {
+  addProduct(`images/${i+1}.jpg`, name, "da");
+});
+
+/* ===== PORCELAN PRODUCTS ===== */
+document.querySelectorAll("#porMenu img").forEach((img, i) => {
+  addProduct(img.src, `POR-${i+1}`, "porcelain");
+});
+
+/* ===== FUNCTIONS ===== */
+function toggleMenu(id) {
+  const m = document.getElementById(id);
+  m.style.display = m.style.display === "grid" ? "none" : "grid";
+}
+
+function showCategory(cat) {
+  currentCategory = cat;
+  document.getElementById("search").value = "";
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = p.dataset.category === cat ? "block" : "none";
+  });
+}
+
+function searchProduct() {
+  const keyword = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".product").forEach(p => {
+    const match =
+      p.dataset.category === currentCategory &&
+      p.dataset.name.includes(keyword);
+    p.style.display = match ? "block" : "none";
+  });
+}
+</script>
+
 </body>
 </html>
