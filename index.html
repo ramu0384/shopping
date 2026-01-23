@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>My Shop</title>
@@ -22,30 +22,31 @@ body {
   box-sizing: border-box;
 }
 
-.menu-item {
+.menu-title {
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  margin: 12px 0;
+  margin-bottom: 10px;
 }
 
-/* menu images */
 .menu-images {
   display: none;
-  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
 }
 
 .menu-images img {
-  width: 60px;
+  width: 100%;
   height: 60px;
   object-fit: cover;
   border-radius: 6px;
-  margin: 5px;
   cursor: pointer;
   border: 2px solid transparent;
 }
 
 .menu-images img:hover {
-  border-color: #fff;
+  border-color: white;
 }
 
 /* ===== CONTENT ===== */
@@ -58,10 +59,10 @@ body {
   width: 300px;
   padding: 10px;
   font-size: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-/* PRODUCTS GRID */
+/* ===== PRODUCTS GRID ===== */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -82,6 +83,10 @@ body {
   cursor: pointer;
 }
 
+.product h3 {
+  margin: 10px 0 5px;
+}
+
 .price {
   color: green;
   font-weight: bold;
@@ -93,27 +98,24 @@ body {
 
 <!-- ===== LEFT MENU ===== -->
 <div class="sidebar">
-
-  <div class="menu-item" onclick="toggleStoneMenu()">Đá 60x60</div>
+  <div class="menu-title" onclick="toggleMenu()">Đá 60x60</div>
 
   <div class="menu-images" id="stoneMenu">
-  <img src="images/1.jpg" onclick="filterProducts('stone')">
-  <img src="images/2.jpg" onclick="filterProducts('stone')">
-  <img src="images/3.jpg" onclick="filterProducts('stone')">
-  <img src="images/4.jpg" onclick="filterProducts('stone')">
-  <img src="images/5.jpg" onclick="filterProducts('stone')">
-  <img src="images/6.jpg" onclick="filterProducts('stone')">
-  <img src="images/7.jpg" onclick="filterProducts('stone')">
-  <img src="images/8.jpg" onclick="filterProducts('stone')">
-  <img src="images/9.jpg" onclick="filterProducts('stone')">
-  <img src="images/10.jpg" onclick="filterProducts('stone')">
-  <img src="images/11.jpg" onclick="filterProducts('stone')">
-  <img src="images/12.jpg" onclick="filterProducts('stone')">
-  <img src="images/13.jpg" onclick="filterProducts('stone')">
-  <img src="images/14.jpg" onclick="filterProducts('stone')">
-</div>
-
-
+    <img src="images/1.jpg" onclick="showAll()">
+    <img src="images/2.jpg" onclick="showAll()">
+    <img src="images/3.jpg" onclick="showAll()">
+    <img src="images/4.jpg" onclick="showAll()">
+    <img src="images/5.jpg" onclick="showAll()">
+    <img src="images/6.jpg" onclick="showAll()">
+    <img src="images/7.jpg" onclick="showAll()">
+    <img src="images/8.jpg" onclick="showAll()">
+    <img src="images/9.jpg" onclick="showAll()">
+    <img src="images/10.jpg" onclick="showAll()">
+    <img src="images/11.jpg" onclick="showAll()">
+    <img src="images/12.jpg" onclick="showAll()">
+    <img src="images/13.jpg" onclick="showAll()">
+    <img src="images/14.jpg" onclick="showAll()">
+  </div>
 </div>
 
 <!-- ===== MAIN CONTENT ===== -->
@@ -123,128 +125,112 @@ body {
 
 <div class="products">
 
-  <div class="product" data-name="MH6024" data-category="stone">
+  <div class="product" data-name="MH6024">
     <img src="images/1.jpg">
     <h3>MH6024</h3>
     <p class="price">160k</p>
   </div>
 
-  <div class="product" data-name="MECO643" data-category="stone">
+  <div class="product" data-name="MECO643">
     <img src="images/2.jpg">
     <h3>MECO643</h3>
     <p class="price">160k</p>
   </div>
 
-   <div class="product" data-name="MH6028" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MH6028">
+    <img src="images/3.jpg">
     <h3>MH6028</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MH6025" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MH6025">
+    <img src="images/4.jpg">
     <h3>MH6025</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MH6034" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MH6034">
+    <img src="images/5.jpg">
     <h3>MH6034</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6001" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6001">
+    <img src="images/6.jpg">
     <h3>MDL6001</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6002" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6002">
+    <img src="images/7.jpg">
     <h3>MDL6002</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6003" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6003">
+    <img src="images/8.jpg">
     <h3>MDL6003</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MH6031" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MH6031">
+    <img src="images/9.jpg">
     <h3>MH6031</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6004" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6004">
+    <img src="images/10.jpg">
     <h3>MDL6004</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6006" data-category="stone">
-    <img src="images/1.jpg">
-    <h3>MDL6006</h3>
-    <p class="price">160k</p>
-  </div>
-
-    <div class="product" data-name="MDL6005" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6005">
+    <img src="images/11.jpg">
     <h3>MDL6005</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6007" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6006">
+    <img src="images/12.jpg">
+    <h3>MDL6006</h3>
+    <p class="price">160k</p>
+  </div>
+
+  <div class="product" data-name="MDL6007">
+    <img src="images/13.jpg">
     <h3>MDL6007</h3>
     <p class="price">160k</p>
   </div>
 
-    <div class="product" data-name="MDL6008" data-category="stone">
-    <img src="images/1.jpg">
+  <div class="product" data-name="MDL6008">
+    <img src="images/14.jpg">
     <h3>MDL6008</h3>
     <p class="price">160k</p>
   </div>
 
-      <div class="product" data-name="MDL6009" data-category="stone">
-    <img src="images/1.jpg">
-    <h3>MDL6009</h3>
-    <p class="price">160k</p>
-  </div>
-  
-      <div class="product" data-name="MDL6010" data-category="stone">
-    <img src="images/1.jpg">
-    <h3>MDL6010</h3>
-    <p class="price">160k</p>
-  </div>
-  
-      <div class="product" data-name="MDL6008" data-category="stone">
-    <img src="images/1.jpg">
-    <h3>MDL6008</h3>
-    <p class="price">160k</p>
-  </div>
-  
 </div>
 </div>
 
 <script>
-function toggleStoneMenu() {
+function toggleMenu() {
   const menu = document.getElementById("stoneMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
-function filterProducts(category) {
-  document.getElementById("search").value = "";
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.category === category ? "block" : "none";
-  });
+  menu.style.display = menu.style.display === "grid" ? "none" : "grid";
 }
 
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.name.includes(input) ? "block" : "none";
+    p.style.display = p.dataset.name.toLowerCase().includes(input)
+      ? "block"
+      : "none";
+  });
+}
+
+function showAll() {
+  document.getElementById("search").value = "";
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = "block";
   });
 }
 </script>
