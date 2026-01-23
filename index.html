@@ -2,19 +2,13 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Gạch 60x60</title>
+<title>My Shop</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
 
-body {
-  margin: 0;
-}
+body { margin: 0; }
 
-/* ===== LAYOUT ===== */
 .container {
   display: flex;
   min-height: 100vh;
@@ -23,7 +17,7 @@ body {
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 260px;
-  background: #000;
+  background: #111;
   color: #fff;
   padding: 15px;
   position: sticky;
@@ -40,8 +34,12 @@ body {
 
 .menu-title {
   font-weight: bold;
+  margin: 15px 0 8px;
   cursor: pointer;
-  margin-bottom: 10px;
+}
+
+.menu-images {
+  display: none;
 }
 
 .menu-images img {
@@ -56,17 +54,18 @@ body {
   padding: 20px;
 }
 
-/* ===== GRID ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 }
 
+/* ===== PRODUCT ===== */
 .product {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  display: none; /* 👈 HIDDEN BY DEFAULT */
 }
 
 .product img {
@@ -84,7 +83,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,.85);
   justify-content: center;
   align-items: center;
   z-index: 999;
@@ -99,8 +98,8 @@ body {
   position: absolute;
   top: 20px;
   right: 30px;
-  color: #fff;
   font-size: 30px;
+  color: #fff;
   cursor: pointer;
 }
 </style>
@@ -110,57 +109,50 @@ body {
 
 <div class="container">
 
-  <!-- ===== LEFT MENU ===== -->
+  <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar">
-    <input class="search" type="text" placeholder="Search..." onkeyup="searchProducts()">
+    <input class="search" placeholder="Search..." onkeyup="searchProducts()">
 
-    <div class="menu-title" onclick="toggleMenu()">Đá 60x60</div>
+    <div class="menu-title" onclick="toggleMenu('da')">Đá 60x60</div>
+    <div class="menu-images" id="da">
+      <img src="images/1.jpg" onclick="showCategory('da')">
+      <img src="images/2.jpg" onclick="showCategory('da')">
+    </div>
 
-    <div class="menu-images" id="menuImages">
-      <img src="images/1.jpg" onclick="scrollTopProducts()">
-      <img src="images/2.jpg" onclick="scrollTopProducts()">
-      <img src="images/3.jpg" onclick="scrollTopProducts()">
+    <div class="menu-title" onclick="toggleMenu('porcelan')">Porcelan 60x60</div>
+    <div class="menu-images" id="porcelan">
+      <img src="images/3.jpg" onclick="showCategory('porcelan')">
+      <img src="images/4.jpg" onclick="showCategory('porcelan')">
     </div>
   </aside>
 
-  <!-- ===== RIGHT CONTENT ===== -->
+  <!-- ===== CONTENT ===== -->
   <main class="content">
-    <div class="grid" id="productGrid">
+    <div class="grid">
 
-      <!-- PRODUCT -->
-      <div class="product">
+      <!-- ĐÁ -->
+      <div class="product" data-category="da">
         <img src="images/1.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
+        <p class="name">MH6024</p>
         <p class="price">160k</p>
       </div>
 
-      <div class="product">
+      <div class="product" data-category="da">
         <img src="images/2.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
+        <p class="name">MH6025</p>
         <p class="price">160k</p>
       </div>
 
-      <div class="product">
+      <!-- PORCELAN -->
+      <div class="product" data-category="porcelan">
         <img src="images/3.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
+        <p class="name">MDL6001</p>
         <p class="price">160k</p>
       </div>
 
-      <div class="product">
+      <div class="product" data-category="porcelan">
         <img src="images/4.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
-        <p class="price">160k</p>
-      </div>
-
-      <div class="product">
-        <img src="images/5.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
-        <p class="price">160k</p>
-      </div>
-
-      <div class="product">
-        <img src="images/6.jpg" onclick="openImage(this.src)">
-        <p class="name">name of bricks</p>
+        <p class="name">MDL6002</p>
         <p class="price">160k</p>
       </div>
 
@@ -169,16 +161,30 @@ body {
 
 </div>
 
-<!-- ===== IMAGE OVERLAY ===== -->
+<!-- ===== OVERLAY ===== -->
 <div class="overlay" id="overlay" onclick="closeImage()">
   <span>&times;</span>
   <img id="overlayImg">
 </div>
 
 <script>
-function toggleMenu() {
-  const m = document.getElementById("menuImages");
-  m.style.display = m.style.display === "block" ? "none" : "block";
+function toggleMenu(id) {
+  const menu = document.getElementById(id);
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function showCategory(cat) {
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = p.dataset.category === cat ? "block" : "none";
+  });
+}
+
+function searchProducts() {
+  const input = document.querySelector(".search").value.toLowerCase();
+  document.querySelectorAll(".product").forEach(p => {
+    const name = p.querySelector(".name").innerText.toLowerCase();
+    p.style.display = name.includes(input) ? "block" : "none";
+  });
 }
 
 function openImage(src) {
@@ -188,20 +194,6 @@ function openImage(src) {
 
 function closeImage() {
   document.getElementById("overlay").style.display = "none";
-}
-
-function scrollTopProducts() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function searchProducts() {
-  const input = document.querySelector(".search").value.toLowerCase();
-  const products = document.querySelectorAll(".product");
-
-  products.forEach(p => {
-    const name = p.querySelector(".name").innerText.toLowerCase();
-    p.style.display = name.includes(input) ? "block" : "none";
-  });
 }
 </script>
 
