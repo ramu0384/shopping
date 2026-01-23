@@ -20,10 +20,6 @@
       padding: 20px;
     }
 
-    .sidebar h2 {
-      text-align: center;
-    }
-
     .menu-item {
       cursor: pointer;
       margin: 15px 0;
@@ -34,10 +30,6 @@
       margin-left: 15px;
       display: none;
       font-size: 14px;
-    }
-
-    .submenu div {
-      margin: 8px 0;
     }
 
     /* MAIN */
@@ -65,25 +57,49 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
-      overflow: hidden; /* IMPORTANT for zoom */
+      overflow: hidden;
     }
 
-    /* IMAGE HOVER ZOOM */
     .product img {
       width: 100%;
       height: 160px;
       object-fit: cover;
       border-radius: 10px;
-      transition: transform 0.3s ease;
-    }
-
-    .product img:hover {
-      transform: scale(1.25);
+      cursor: pointer;
     }
 
     .price {
       color: green;
       font-weight: bold;
+    }
+
+    /* CLICK ZOOM MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .zoom-box {
+      width: 70%;
+      max-width: 600px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: white;
+    }
+
+    .zoom-box img {
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    /* Hover zoom INSIDE modal */
+    .zoom-box img:hover {
+      transform: scale(1.6);
     }
   </style>
 </head>
@@ -92,8 +108,6 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <h2>Menu</h2>
-
   <div class="menu-item" onclick="toggleMenu('A')">A. Cubing Gear</div>
   <div class="submenu" id="A">
     <div>A1. Cubing Mat</div>
@@ -108,11 +122,10 @@
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
   <input
-    type="text"
     class="search-box"
     placeholder="Search products..."
     onkeyup="searchProducts()"
@@ -121,39 +134,34 @@
   <div class="products">
 
     <div class="product" data-name="cubing mat">
-      <img src="images/1.webp" alt="Cubing Mat">
+      <img src="images/1.webp" onclick="openZoom(this)">
       <h3>A1. Cubing Mat</h3>
       <p class="price">169k</p>
     </div>
 
     <div class="product" data-name="speed cube">
-      <img src="images/2.jpg" alt="Speed Cube">
+      <img src="images/2.jpg" onclick="openZoom(this)">
       <h3>A2. Speed Cube</h3>
       <p class="price">250k</p>
     </div>
 
     <div class="product" data-name="cube lube">
-      <img src="images/3.jpg" alt="Cube Lube">
+      <img src="images/3.jpg" onclick="openZoom(this)">
       <h3>A3. Cube Lube</h3>
       <p class="price">80k</p>
-    </div>
-
-    <div class="product" data-name="stackmat gen 5">
-      <img src="images/4.jpg" alt="Stackmat Gen 5">
-      <h3>B1. Stackmat Gen 5</h3>
-      <p class="price">$100</p>
-    </div>
-
-    <div class="product" data-name="smart timer">
-      <img src="images/5.jpg" alt="Smart Timer">
-      <h3>B2. Smart Timer</h3>
-      <p class="price">$60</p>
     </div>
 
   </div>
 </div>
 
-<!-- JAVASCRIPT -->
+<!-- ZOOM MODAL -->
+<div class="modal" id="zoomModal" onclick="closeZoom()">
+  <div class="zoom-box">
+    <img id="zoomImg">
+  </div>
+</div>
+
+<!-- JS -->
 <script>
   function toggleMenu(id) {
     const menu = document.getElementById(id);
@@ -162,12 +170,18 @@
 
   function searchProducts() {
     const input = document.querySelector(".search-box").value.toLowerCase();
-    const products = document.querySelectorAll(".product");
-
-    products.forEach(product => {
-      const name = product.dataset.name;
-      product.style.display = name.includes(input) ? "block" : "none";
+    document.querySelectorAll(".product").forEach(p => {
+      p.style.display = p.dataset.name.includes(input) ? "block" : "none";
     });
+  }
+
+  function openZoom(img) {
+    document.getElementById("zoomImg").src = img.src;
+    document.getElementById("zoomModal").style.display = "flex";
+  }
+
+  function closeZoom() {
+    document.getElementById("zoomModal").style.display = "none";
   }
 </script>
 
