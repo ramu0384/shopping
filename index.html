@@ -18,30 +18,33 @@ body {
   background: #222;
   color: white;
   padding: 20px;
-  height: 100vh;
+  box-sizing: border-box;
   position: sticky;
   top: 0;
+  height: 100vh;
   overflow-y: auto;
 }
 
-.menu-item {
+.menu-title {
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 10px;
 }
 
 .menu-images {
+  display: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
 .menu-images img {
   width: 100%;
   height: 60px;
   object-fit: cover;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
 }
 
 /* ===== CONTENT ===== */
@@ -54,10 +57,10 @@ body {
   width: 300px;
   padding: 10px;
   font-size: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-/* PRODUCTS GRID */
+/* ===== PRODUCTS GRID ===== */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -67,7 +70,7 @@ body {
 .product {
   background: white;
   padding: 15px;
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   text-align: center;
 }
@@ -78,36 +81,13 @@ body {
   cursor: pointer;
 }
 
+.product h3 {
+  margin: 10px 0 5px;
+}
+
 .price {
   color: green;
   font-weight: bold;
-}
-
-/* ===== IMAGE VIEWER ===== */
-#viewer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-#viewer img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-  background: white;
-}
-
-#closeBtn {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 30px;
-  color: white;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -172,30 +152,26 @@ body {
 
 </div>
 </div>
-<!-- ===== IMAGE VIEWER ===== -->
-<div id="viewer" onclick="closeViewer()">
-  <span id="closeBtn">✕</span>
-  <img id="viewerImg">
-</div>
 
 <script>
+function toggleMenu() {
+  const menu = document.getElementById("stoneMenu");
+  menu.style.display = menu.style.display === "grid" ? "none" : "grid";
+}
+
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.name.toLowerCase().includes(input)
-      ? "block"
-      : "none";
+    const name = p.dataset.name.toLowerCase();
+    p.style.display = name.includes(input) ? "" : "none";
   });
 }
 
-/* IMAGE VIEWER */
-function openViewer(src) {
-  document.getElementById("viewerImg").src = src;
-  document.getElementById("viewer").style.display = "flex";
-}
-
-function closeViewer() {
-  document.getElementById("viewer").style.display = "none";
+function showAll() {
+  document.getElementById("search").value = "";
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = "";
+  });
 }
 </script>
 
