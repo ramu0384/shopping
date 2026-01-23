@@ -12,13 +12,13 @@ body {
   background: #f4f4f4;
 }
 
-/* ===== LEFT MENU ===== */
+/* LEFT MENU */
 .sidebar {
   width: 220px;
   background: #222;
   color: white;
   padding: 20px;
-  height: 100vh; /* full height */
+  height: 100vh;
   box-sizing: border-box;
 }
 
@@ -43,7 +43,7 @@ body {
   color: white;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* CONTENT */
 .content {
   flex: 1;
   padding: 30px;
@@ -56,7 +56,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* PRODUCTS GRID */
+/* GRID */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -71,7 +71,7 @@ body {
   text-align: center;
 }
 
-/* CLICKABLE IMAGE */
+/* IMAGE — NO ZOOM, CLICKABLE */
 .product img {
   width: 100%;
   border-radius: 10px;
@@ -87,7 +87,6 @@ body {
 
 <body>
 
-<!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
   <div class="menu-item" onclick="toggleMenu('a')">A</div>
   <div class="submenu" id="a">
@@ -101,7 +100,6 @@ body {
   </div>
 </div>
 
-<!-- ===== CONTENT ===== -->
 <div class="content">
 
 <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
@@ -109,25 +107,19 @@ body {
 <div class="products">
 
   <div class="product" data-name="cubing mat" data-category="a1">
-    <a href="#">
-      <img src="images/3.jpg" alt="Cubing Mat">
-    </a>
+    <img src="images/3.jpg" onclick="alert('Cubing Mat clicked!')">
     <h3>Cubing Mat</h3>
     <p class="price">169k</p>
   </div>
 
   <div class="product" data-name="speed cube" data-category="a2">
-    <a href="#">
-      <img src="images/1.webp" alt="Speed Cube">
-    </a>
+    <img src="images/1.webp" onclick="alert('Speed Cube clicked!')">
     <h3>Speed Cube</h3>
     <p class="price">250k</p>
   </div>
 
   <div class="product" data-name="timer" data-category="b1">
-    <a href="#">
-      <img src="images/2.jpg" alt="Timer">
-    </a>
+    <img src="images/2.jpg" onclick="alert('Timer clicked!')">
     <h3>Timer</h3>
     <p class="price">300k</p>
   </div>
@@ -136,13 +128,11 @@ body {
 </div>
 
 <script>
-/* TOGGLE LEFT MENU */
 function toggleMenu(id) {
   const menu = document.getElementById(id);
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* FILTER BY CATEGORY */
 function filterProducts(category) {
   document.getElementById("search").value = "";
   document.querySelectorAll(".product").forEach(p => {
@@ -150,7 +140,6 @@ function filterProducts(category) {
   });
 }
 
-/* SEARCH */
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
