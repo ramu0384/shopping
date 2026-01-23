@@ -57,49 +57,48 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
-      overflow: hidden;
     }
 
-    .product img {
+    /* MAGNIFIER CONTAINER */
+    .img-zoom-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .img-zoom-container img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
+      display: block;
+    }
+
+    /* LENS */
+    .img-zoom-lens {
+      position: absolute;
+      border: 2px solid #000;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.3);
+      display: none;
+      cursor: none;
+    }
+
+    /* ZOOM RESULT */
+    .img-zoom-result {
+      position: absolute;
+      right: -220px;
+      top: 0;
+      width: 200px;
+      height: 200px;
+      border: 2px solid #000;
+      background-repeat: no-repeat;
+      display: none;
     }
 
     .price {
       color: green;
       font-weight: bold;
-    }
-
-    /* CLICK ZOOM MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .zoom-box {
-      width: 70%;
-      max-width: 600px;
-      overflow: hidden;
-      border-radius: 12px;
-      background: white;
-    }
-
-    .zoom-box img {
-      width: 100%;
-      transition: transform 0.3s ease;
-    }
-
-    /* Hover zoom INSIDE modal */
-    .zoom-box img:hover {
-      transform: scale(1.6);
     }
   </style>
 </head>
@@ -125,63 +124,69 @@
 <!-- MAIN -->
 <div class="main">
 
-  <input
-    class="search-box"
-    placeholder="Search products..."
-    onkeyup="searchProducts()"
-  >
+  <input class="search-box" placeholder="Search products..." onkeyup="searchProducts()">
 
   <div class="products">
 
     <div class="product" data-name="cubing mat">
-      <img src="images/1.webp" onclick="openZoom(this)">
+      <div class="img-zoom-container">
+        <img src="images/1.webp" onmousemove="zoom(event,this)" onmouseenter="showZoom(this)" onmouseleave="hideZoom(this)">
+        <div class="img-zoom-lens"></div>
+        <div class="img-zoom-result"></div>
+      </div>
       <h3>A1. Cubing Mat</h3>
       <p class="price">169k</p>
     </div>
 
-    <div class="product" data-name="speed cube">
-      <img src="images/2.jpg" onclick="openZoom(this)">
-      <h3>A2. Speed Cube</h3>
-      <p class="price">250k</p>
-    </div>
-
-    <div class="product" data-name="cube lube">
-      <img src="images/3.jpg" onclick="openZoom(this)">
-      <h3>A3. Cube Lube</h3>
-      <p class="price">80k</p>
-    </div>
-
   </div>
 </div>
 
-<!-- ZOOM MODAL -->
-<div class="modal" id="zoomModal" onclick="closeZoom()">
-  <div class="zoom-box">
-    <img id="zoomImg">
-  </div>
-</div>
-
-<!-- JS -->
 <script>
   function toggleMenu(id) {
-    const menu = document.getElementById(id);
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    const m = document.getElementById(id);
+    m.style.display = m.style.display === "block" ? "none" : "block";
   }
 
   function searchProducts() {
-    const input = document.querySelector(".search-box").value.toLowerCase();
+    const v = document.querySelector(".search-box").value.toLowerCase();
     document.querySelectorAll(".product").forEach(p => {
-      p.style.display = p.dataset.name.includes(input) ? "block" : "none";
+      p.style.display = p.dataset.name.includes(v) ? "block" : "none";
     });
   }
 
-  function openZoom(img) {
-    document.getElementById("zoomImg").src = img.src;
-    document.getElementById("zoomModal").style.display = "flex";
+  function showZoom(img) {
+    const c = img.parentElement;
+    c.querySelector(".img-zoom-lens").style.display = "block";
+    c.querySelector(".img-zoom-result").style.display = "block";
+    c.querySelector(".img-zoom-result").style.backgroundImage = `url('${img.src}')`;
+    c.querySelector(".img-zoom-result").style.backgroundSize = "300%";
   }
 
-  function closeZoom() {
-    document.getElementById("zoomModal").style.display = "none";
+  function hideZoom(img) {
+    const c = img.parentElement;
+    c.querySelector(".img-zoom-lens").style.display = "none";
+    c.querySelector(".img-zoom-result").style.display = "none";
+  }
+
+  function zoom(e, img) {
+    const c = img.parentElement;
+    const lens = c.querySelector(".img-zoom-lens");
+    const result = c.querySelector(".img-zoom-result");
+
+    const rect = img.getBoundingClientRect();
+    let x = e.clientX - rect.left - lens.offsetWidth / 2;
+    let y = e.clientY - rect.top - lens.offsetHeight / 2;
+
+    x = Math.max(0, Math.min(x, img.width - lens.offsetWidth));
+    y = Math.max(0, Math.min(y, img.height - lens.offsetHeight));
+
+    lens.style.left = x + "px";
+    lens.style.top = y + "px";
+
+    const fx = result.offsetWidth / lens.offsetWidth;
+    const fy = result.offsetHeight / lens.offsetHeight;
+
+    result.style.backgroundPosition = `-${x * fx}px -${y * fy}px`;
   }
 </script>
 
