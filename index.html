@@ -127,58 +127,22 @@ body {
 
 <!-- ===== MAIN ===== -->
 <div class="content">
-
 <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
-
 <div class="products" id="products"></div>
-
 </div>
 
 <script>
 const productsBox = document.getElementById("products");
 let currentCategory = "";
 
-/* ===== DATA WITH REAL NAMES ===== */
-const daProducts = [
-  { img: "images/1.jpg", name: "MH6001" },
-  { img: "images/2.jpg", name: "MH6002" },
-  { img: "images/3.jpg", name: "MH6003" },
-  { img: "images/4.jpg", name: "MH6004" },
-  { img: "images/5.jpg", name: "MH6005" },
-  { img: "images/6.jpg", name: "MDL6001" },
-  { img: "images/7.jpg", name: "MDL6002" },
-  { img: "images/8.jpg", name: "MDL6003" },
-  { img: "images/9.jpg", name: "MDL6004" },
-  { img: "images/10.jpg", name: "MDL6005" },
-  { img: "images/11.jpg", name: "MDL6006" },
-  { img: "images/12.jpg", name: "MDL6007" },
-  { img: "images/13.jpg", name: "MDL6008" },
-  { img: "images/14.jpg", name: "MDL6009" }
+/* ===== ĐÁ NAMES (KEEP YOURS) ===== */
+const daNames = [
+  "MH6001","MH6002","MH6003","MH6004","MH6005",
+  "MDL6001","MDL6002","MDL6003","MDL6004","MDL6005",
+  "MDL6006","MDL6007","MDL6008","MDL6009"
 ];
 
-const porcelainProducts = [
-  {
-    img: "images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg",
-    name: "PC6001"
-  },
-  {
-    img: "images/z7460526998789_9ab36461b976f9d617cdd7320e755340.jpg",
-    name: "PC6002"
-  },
-  {
-    img: "images/z7460527035866_b35b6fac8e22877db82e150f6b4a3dc1.jpg",
-    name: "PC6003"
-  },
-  {
-    img: "images/z7460527062680_d486501e4fb676dd6890017f14722022.jpg",
-    name: "PC6004"
-  },
-  {
-    img: "images/z7460527082478_4c369bcf24ff7bae41d3c2968a789af9.jpg",
-    name: "PC6005"
-  }
-];
-
+/* ===== ADD PRODUCT ===== */
 function addProduct(img, name, cat) {
   const d = document.createElement("div");
   d.className = "product";
@@ -191,10 +155,17 @@ function addProduct(img, name, cat) {
   productsBox.appendChild(d);
 }
 
-/* ===== CREATE PRODUCTS ===== */
-daProducts.forEach(p => addProduct(p.img, p.name, "da"));
-porcelainProducts.forEach(p => addProduct(p.img, p.name, "porcelain"));
+/* ===== CREATE ĐÁ ===== */
+daNames.forEach((name, i) => {
+  addProduct(`images/${i+1}.jpg`, name, "da");
+});
 
+/* ===== CREATE ALL PORCELAIN AUTOMATICALLY ===== */
+document.querySelectorAll("#porMenu img").forEach((img, index) => {
+  addProduct(img.src, `PC600${index+1}`, "porcelain");
+});
+
+/* ===== FUNCTIONS ===== */
 function toggleMenu(id) {
   const m = document.getElementById(id);
   m.style.display = m.style.display === "grid" ? "none" : "grid";
