@@ -12,9 +12,9 @@ body {
   background: #f4f4f4;
 }
 
-/* LEFT MENU */
+/* ===== SIDEBAR ===== */
 .sidebar {
-  width: 220px;
+  width: 240px;
   background: #222;
   color: white;
   padding: 20px;
@@ -28,22 +28,26 @@ body {
   margin: 12px 0;
 }
 
-.submenu {
-  margin-left: 15px;
+.menu-images {
   display: none;
+  margin-top: 10px;
 }
 
-.submenu div {
+.menu-images img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin: 5px;
   cursor: pointer;
-  color: #ccc;
-  margin: 6px 0;
+  border: 2px solid transparent;
 }
 
-.submenu div:hover {
-  color: white;
+.menu-images img:hover {
+  border-color: #fff;
 }
 
-/* CONTENT */
+/* ===== CONTENT ===== */
 .content {
   flex: 1;
   padding: 30px;
@@ -56,7 +60,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* GRID */
+/* PRODUCTS GRID */
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -71,7 +75,6 @@ body {
   text-align: center;
 }
 
-/* IMAGE — NO ZOOM, CLICKABLE */
 .product img {
   width: 100%;
   border-radius: 10px;
@@ -87,49 +90,53 @@ body {
 
 <body>
 
+<!-- ===== LEFT MENU ===== -->
 <div class="sidebar">
-  <div class="menu-item" onclick="toggleMenu('a')">A</div>
-  <div class="submenu" id="a">
-    <div onclick="filterProducts('a1')">a1</div>
-    <div onclick="filterProducts('a2')">a2</div>
+
+  <div class="menu-item" onclick="filterProducts('a')">A</div>
+  <div class="menu-item" onclick="filterProducts('b')">B</div>
+
+  <div class="menu-item" onclick="toggleStoneMenu()">Đá 60x60</div>
+
+  <div class="menu-images" id="stoneMenu">
+    <img src="images/stone1.jpg" onclick="filterProducts('stone')">
+    <img src="images/stone2.jpg" onclick="filterProducts('stone')">
+    <img src="images/stone3.jpg" onclick="filterProducts('stone')">
   </div>
 
-  <div class="menu-item" onclick="toggleMenu('b')">B</div>
-  <div class="submenu" id="b">
-    <div onclick="filterProducts('b1')">b1</div>
-  </div>
 </div>
 
+<!-- ===== MAIN CONTENT ===== -->
 <div class="content">
 
 <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
 
 <div class="products">
 
-  <div class="product" data-name="cubing mat" data-category="a1">
-    <img src="images/3.jpg" onclick="alert('Cubing Mat clicked!')">
-    <h3>Cubing Mat</h3>
-    <p class="price">169k</p>
+  <div class="product" data-name="name of bricks" data-category="stone">
+    <img src="images/stone1.jpg">
+    <h3>Name of bricks</h3>
+    <p class="price">160k</p>
   </div>
 
-  <div class="product" data-name="speed cube" data-category="a2">
-    <img src="images/1.webp" onclick="alert('Speed Cube clicked!')">
-    <h3>Speed Cube</h3>
-    <p class="price">250k</p>
+  <div class="product" data-name="name of bricks" data-category="stone">
+    <img src="images/stone2.jpg">
+    <h3>Name of bricks</h3>
+    <p class="price">160k</p>
   </div>
 
-  <div class="product" data-name="timer" data-category="b1">
-    <img src="images/2.jpg" onclick="alert('Timer clicked!')">
-    <h3>Timer</h3>
-    <p class="price">300k</p>
+  <div class="product" data-name="name of bricks" data-category="stone">
+    <img src="images/stone3.jpg">
+    <h3>Name of bricks</h3>
+    <p class="price">160k</p>
   </div>
 
 </div>
 </div>
 
 <script>
-function toggleMenu(id) {
-  const menu = document.getElementById(id);
+function toggleStoneMenu() {
+  const menu = document.getElementById("stoneMenu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
