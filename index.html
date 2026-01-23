@@ -1,217 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>My Shop</title>
+<title>Gạch 60x60</title>
 
 <style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+}
+
+/* ===== LAYOUT ===== */
+.container {
   display: flex;
-  background: #f4f4f4;
+  min-height: 100vh;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-  width: 240px;
-  background: #222;
-  color: white;
-  padding: 20px;
-  box-sizing: border-box;
-
+  width: 260px;
+  background: #000;
+  color: #fff;
+  padding: 15px;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
 }
 
-.menu-title {
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 15px 0 10px;
+.search {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
 }
 
-.menu-images {
-  display: none;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 15px;
+.menu-title {
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .menu-images img {
   width: 100%;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
+  margin-bottom: 8px;
   cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.menu-images img:hover {
-  border-color: white;
 }
 
 /* ===== CONTENT ===== */
 .content {
   flex: 1;
-  padding: 30px;
+  padding: 20px;
 }
 
-#search {
-  width: 300px;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 25px;
-}
-
-/* ===== PRODUCTS GRID ===== */
-.products {
+/* ===== GRID ===== */
+.grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 15px;
 }
 
 .product {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  padding: 10px;
   text-align: center;
 }
 
 .product img {
   width: 100%;
-  border-radius: 10px;
   cursor: pointer;
 }
 
-.product h3 {
-  margin: 10px 0 5px;
+.price {
+  color: red;
+  font-weight: bold;
 }
 
-.price {
-  color: green;
-  font-weight: bold;
+/* ===== OVERLAY ===== */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.overlay span {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===== LEFT MENU ===== -->
-<div class="sidebar">
+<div class="container">
 
-  <div class="menu-title" onclick="toggleMenu('stoneMenu1')">Đá 60x60</div>
-  <div class="menu-images" id="stoneMenu1">
-    <img src="images/1.jpg" onclick="showAll()">
-    <img src="images/2.jpg" onclick="showAll()">
-    <img src="images/3.jpg" onclick="showAll()">
-    <img src="images/4.jpg" onclick="showAll()">
-    <img src="images/5.jpg" onclick="showAll()">
-    <img src="images/6.jpg" onclick="showAll()">
-    <img src="images/7.jpg" onclick="showAll()">
-    <img src="images/8.jpg" onclick="showAll()">
-    <img src="images/9.jpg" onclick="showAll()">
-    <img src="images/10.jpg" onclick="showAll()">
-    <img src="images/11.jpg" onclick="showAll()">
-    <img src="images/12.jpg" onclick="showAll()">
-    <img src="images/13.jpg" onclick="showAll()">
-    <img src="images/14.jpg" onclick="showAll()">
-  </div>
+  <!-- ===== LEFT MENU ===== -->
+  <aside class="sidebar">
+    <input class="search" type="text" placeholder="Search..." onkeyup="searchProducts()">
 
-  <div class="menu-title" onclick="toggleMenu('stoneMenu2')">Porcelan 60x60</div>
-  <div class="menu-images" id="stoneMenu2">
-    <img src="images/images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg" onclick="showAll()">
-    <img src="images/images/z7460526998789_9ab36461b976f9d617cdd7320e755340.jpg" onclick="showAll()">
-    <img src="images/images/z7460527035866_b35b6fac8e22877db82e150f6b4a3dc1.jpg" onclick="showAll()">
-    <img src="images/images/z7460527062680_d486501e4fb676dd6890017f14722022.jpg" onclick="showAll()">
-    <img src="images/images/z7460527082478_4c369bcf24ff7bae41d3c2968a789af9.jpg" onclick="showAll()">
-  </div>
+    <div class="menu-title" onclick="toggleMenu()">Đá 60x60</div>
 
-</div>
+    <div class="menu-images" id="menuImages">
+      <img src="images/1.jpg" onclick="scrollTopProducts()">
+      <img src="images/2.jpg" onclick="scrollTopProducts()">
+      <img src="images/3.jpg" onclick="scrollTopProducts()">
+    </div>
+  </aside>
 
-<!-- ===== MAIN CONTENT ===== -->
-<div class="content">
+  <!-- ===== RIGHT CONTENT ===== -->
+  <main class="content">
+    <div class="grid" id="productGrid">
 
-<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+      <!-- PRODUCT -->
+      <div class="product">
+        <img src="images/1.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-<div class="products">
+      <div class="product">
+        <img src="images/2.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-  <div class="product" data-name="mh6024">
-    <img src="images/1.jpg">
-    <h3>MH6024</h3>
-    <p class="price">160k</p>
-  </div>
+      <div class="product">
+        <img src="images/3.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-  <div class="product" data-name="meco643">
-    <img src="images/2.jpg">
-    <h3>MECO643</h3>
-    <p class="price">160k</p>
-  </div>
+      <div class="product">
+        <img src="images/4.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-  <div class="product" data-name="mh6028">
-    <img src="images/3.jpg">
-    <h3>MH6028</h3>
-    <p class="price">160k</p>
-  </div>
+      <div class="product">
+        <img src="images/5.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-  <div class="product" data-name="mh6025">
-    <img src="images/4.jpg">
-    <h3>MH6025</h3>
-    <p class="price">160k</p>
-  </div>
+      <div class="product">
+        <img src="images/6.jpg" onclick="openImage(this.src)">
+        <p class="name">name of bricks</p>
+        <p class="price">160k</p>
+      </div>
 
-  <div class="product" data-name="mh6034">
-    <img src="images/5.jpg">
-    <h3>MH6034</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="mdl6001">
-    <img src="images/6.jpg">
-    <h3>MDL6001</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="mdl6002">
-    <img src="images/7.jpg">
-    <h3>MDL6002</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="mdl6003">
-    <img src="images/8.jpg">
-    <h3>MDL6003</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="mh6031">
-    <img src="images/9.jpg">
-    <h3>MH6031</h3>
-    <p class="price">160k</p>
-  </div>
+    </div>
+  </main>
 
 </div>
+
+<!-- ===== IMAGE OVERLAY ===== -->
+<div class="overlay" id="overlay" onclick="closeImage()">
+  <span>&times;</span>
+  <img id="overlayImg">
 </div>
 
 <script>
-function toggleMenu(id) {
-  const menu = document.getElementById(id);
-  menu.style.display = menu.style.display === "grid" ? "none" : "grid";
+function toggleMenu() {
+  const m = document.getElementById("menuImages");
+  m.style.display = m.style.display === "block" ? "none" : "block";
 }
 
-function searchProduct() {
-  const input = document.getElementById("search").value.toLowerCase();
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.name.includes(input) ? "" : "none";
+function openImage(src) {
+  document.getElementById("overlayImg").src = src;
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closeImage() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function scrollTopProducts() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function searchProducts() {
+  const input = document.querySelector(".search").value.toLowerCase();
+  const products = document.querySelectorAll(".product");
+
+  products.forEach(p => {
+    const name = p.querySelector(".name").innerText.toLowerCase();
+    p.style.display = name.includes(input) ? "block" : "none";
   });
-}
-
-function showAll() {
-  document.getElementById("search").value = "";
-  document.querySelectorAll(".product").forEach(p => p.style.display = "");
 }
 </script>
 
