@@ -57,6 +57,23 @@ body {
   padding: 10px;
   font-size: 16px;
   margin-bottom: 25px;
+  display: none;
+}
+
+/* ===== WELCOME ===== */
+.welcome {
+  text-align: center;
+  margin-top: 120px;
+  color: #555;
+}
+
+.welcome h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  font-size: 18px;
 }
 
 /* ===== PRODUCTS ===== */
@@ -146,23 +163,29 @@ body {
     <img src="images/z7460531911165_66022e3670326667954cde1f33ed21fa.jpg">
     <img src="images/z7460531940952_adf679760d9bf4aa2ad90394c4d140fa.jpg">
   </div>
-
 </div>
 
 <!-- ===== MAIN CONTENT ===== -->
 <div class="content">
 
-<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+  <!-- WELCOME -->
+  <div class="welcome" id="welcome">
+    <h1>Welcome to My Shop 👋</h1>
+    <p>Please choose a category on the left to view products</p>
+  </div>
 
-<div class="products" id="products"></div>
+  <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+  <div class="products" id="products"></div>
 
 </div>
 
 <script>
 const productsBox = document.getElementById("products");
+const welcomeBox = document.getElementById("welcome");
+const searchBox = document.getElementById("search");
 let currentCategory = "";
 
-/* ===== ADD PRODUCT (NO PRICE) ===== */
+/* ===== ADD PRODUCT ===== */
 function addProduct(img, name, cat) {
   const d = document.createElement("div");
   d.className = "product";
@@ -175,7 +198,7 @@ function addProduct(img, name, cat) {
   productsBox.appendChild(d);
 }
 
-/* ===== ĐÁ PRODUCTS ===== */
+/* ===== ĐÁ ===== */
 const daNames = [
   "MH6024","MECO643","MH6028","MH6025","MH6034",
   "MDL6001","MDL6002","MDL6003","MH6031",
@@ -186,7 +209,7 @@ daNames.forEach((name, i) => {
   addProduct(`images/${i+1}.jpg`, name, "da");
 });
 
-/* ===== PORCELAN PRODUCTS ===== */
+/* ===== PORCELAN ===== */
 document.querySelectorAll("#porMenu img").forEach((img, i) => {
   addProduct(img.src, `POR-${i+1}`, "porcelain");
 });
@@ -199,19 +222,21 @@ function toggleMenu(id) {
 
 function showCategory(cat) {
   currentCategory = cat;
-  document.getElementById("search").value = "";
+  welcomeBox.style.display = "none";
+  searchBox.style.display = "block";
+
   document.querySelectorAll(".product").forEach(p => {
     p.style.display = p.dataset.category === cat ? "block" : "none";
   });
 }
 
 function searchProduct() {
-  const keyword = document.getElementById("search").value.toLowerCase();
+  const keyword = searchBox.value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    const match =
+    p.style.display =
       p.dataset.category === currentCategory &&
-      p.dataset.name.includes(keyword);
-    p.style.display = match ? "block" : "none";
+      p.dataset.name.includes(keyword)
+      ? "block" : "none";
   });
 }
 </script>
