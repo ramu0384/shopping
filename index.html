@@ -21,7 +21,6 @@
     }
 
     .sidebar h2 {
-      margin-top: 0;
       text-align: center;
     }
 
@@ -41,7 +40,7 @@
       margin: 8px 0;
     }
 
-    /* MAIN CONTENT */
+    /* MAIN */
     .main {
       flex: 1;
       padding: 30px;
@@ -73,12 +72,32 @@
       height: 160px;
       object-fit: cover;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     .price {
       color: green;
       font-weight: bold;
-      margin-top: 5px;
+    }
+
+    /* ZOOM MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
     }
   </style>
 </head>
@@ -100,11 +119,10 @@
   <div class="submenu" id="B">
     <div>B1. Stackmat Gen 5</div>
     <div>B2. Smart Timer</div>
-    <div>B3. Mini Timer</div>
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div class="main">
 
   <input
@@ -114,34 +132,34 @@
     onkeyup="searchProducts()"
   >
 
-  <div class="products" id="productList">
+  <div class="products">
 
     <div class="product" data-name="cubing mat">
-      <img src="images/1.webp">
+      <img src="images/1.webp" onclick="zoomImage(this)">
       <h3>A1. Cubing Mat</h3>
       <p class="price">169k</p>
     </div>
 
     <div class="product" data-name="speed cube">
-      <img src="images/2.jpg">
+      <img src="images/2.jpg" onclick="zoomImage(this)">
       <h3>A2. Speed Cube</h3>
       <p class="price">250k</p>
     </div>
 
     <div class="product" data-name="cube lube">
-      <img src="images/3.jpg">
+      <img src="images/3.jpg" onclick="zoomImage(this)">
       <h3>A3. Cube Lube</h3>
       <p class="price">80k</p>
     </div>
 
     <div class="product" data-name="stackmat gen 5">
-      <img src="images/4.jpg">
+      <img src="images/4.jpg" onclick="zoomImage(this)">
       <h3>B1. Stackmat Gen 5</h3>
       <p class="price">$100</p>
     </div>
 
     <div class="product" data-name="smart timer">
-      <img src="images/5.jpg">
+      <img src="images/5.jpg" onclick="zoomImage(this)">
       <h3>B2. Smart Timer</h3>
       <p class="price">$60</p>
     </div>
@@ -149,7 +167,12 @@
   </div>
 </div>
 
-<!-- JS -->
+<!-- IMAGE ZOOM MODAL -->
+<div class="modal" id="imageModal" onclick="closeZoom()">
+  <img id="modalImg">
+</div>
+
+<!-- JAVASCRIPT -->
 <script>
   function toggleMenu(id) {
     const menu = document.getElementById(id);
@@ -164,6 +187,15 @@
       const name = product.dataset.name;
       product.style.display = name.includes(input) ? "block" : "none";
     });
+  }
+
+  function zoomImage(img) {
+    document.getElementById("modalImg").src = img.src;
+    document.getElementById("imageModal").style.display = "flex";
+  }
+
+  function closeZoom() {
+    document.getElementById("imageModal").style.display = "none";
   }
 </script>
 
