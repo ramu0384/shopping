@@ -116,7 +116,7 @@ body {
   <div class="menu-title" onclick="toggleMenu('porMenu'); showCategory('porcelain')">
     Porcelan 60x60
   </div>
-  <div class="menu-images" id="porMenu">
+   <div class="menu-images" id="porMenu">
     <img src="images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg">
     <img src="images/z7460526998789_9ab36461b976f9d617cdd7320e755340.jpg">
     <img src="images/z7460527035866_b35b6fac8e22877db82e150f6b4a3dc1.jpg">
@@ -154,14 +154,17 @@ body {
 
 </div>
 
-<!-- ===== MAIN ===== -->
+<!-- ===== MAIN CONTENT ===== -->
 <div class="content">
-  <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
-  <div class="products" id="products"></div>
+
+<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+
+<div class="products" id="products"></div>
+
 </div>
 
 <script>
-/* ===== PRICE LIST ===== */
+/* ================= PRICES (EDIT ONLY HERE) ================= */
 const PRICE_LIST = {
   "MH6024": "160k",
   "MECO643": "160k",
@@ -176,8 +179,43 @@ const PRICE_LIST = {
   "MDL6005": "160k",
   "MDL6006": "160k",
   "MDL6007": "160k",
-  "MDL6008": "160k"
+  "MDL6008": "160k",
+
+  "POR-1": "220k",
+  "POR-2": "225k",
+  "POR-3": "230k",
+  "POR-4": "235k",
+  "POR-5": "240k",
+  "POR-6": "245k",
+  "POR-7": "250k",
+  "POR-8": "255k",
+  "POR-9": "260k",
+  "POR-10": "265k",
+  "POR-11": "270k",
+  "POR-12": "275k",
+  "POR-13": "280k",
+  "POR-14": "285k",
+  "POR-15": "290k",
+  "POR-16": "295k",
+  "POR-17": "300k",
+  "POR-18": "305k",
+  "POR-19": "310k",
+  "POR-20": "315k",
+  "POR-21": "320k",
+  "POR-22": "325k",
+  "POR-23": "330k",
+  "POR-24": "335k",
+  "POR-25": "340k",
+  "POR-26": "345k",
+  "POR-27": "350k",
+  "POR-28": "355k",
+  "POR-29": "360k",
+  "POR-30": "365k",
+  "POR-31": "370k",
+  "POR-32": "375k",
+  "POR-33": "380k"
 };
+/* =========================================================== */
 
 const productsBox = document.getElementById("products");
 let currentCategory = "";
@@ -191,12 +229,12 @@ function addProduct(img, name, cat) {
   d.innerHTML = `
     <img src="${img}">
     <h3>${name}</h3>
-    <p class="price">${PRICE_LIST[name] || (name.startsWith("POR-") ? "220k" : "Contact")}</p>
+    <p class="price">${PRICE_LIST[name] || "Contact"}</p>
   `;
   productsBox.appendChild(d);
 }
 
-/* ===== ĐÁ ===== */
+/* ===== ĐÁ PRODUCTS ===== */
 const daNames = [
   "MH6024","MECO643","MH6028","MH6025","MH6034",
   "MDL6001","MDL6002","MDL6003","MH6031",
@@ -207,7 +245,7 @@ daNames.forEach((name, i) => {
   addProduct(`images/${i+1}.jpg`, name, "da");
 });
 
-/* ===== PORCELAN ===== */
+/* ===== PORCELAN PRODUCTS ===== */
 document.querySelectorAll("#porMenu img").forEach((img, i) => {
   addProduct(img.src, `POR-${i+1}`, "porcelain");
 });
@@ -227,12 +265,12 @@ function showCategory(cat) {
 }
 
 function searchProduct() {
-  const k = document.getElementById("search").value.toLowerCase();
+  const keyword = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    p.style.display =
+    const match =
       p.dataset.category === currentCategory &&
-      p.dataset.name.includes(k)
-      ? "block" : "none";
+      p.dataset.name.includes(keyword);
+    p.style.display = match ? "block" : "none";
   });
 }
 </script>
