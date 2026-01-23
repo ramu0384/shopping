@@ -18,8 +18,12 @@ body {
   background: #222;
   color: white;
   padding: 20px;
-  height: 100vh;
   box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .menu-title {
@@ -221,16 +225,15 @@ function toggleMenu() {
 function searchProduct() {
   const input = document.getElementById("search").value.toLowerCase();
   document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.name.toLowerCase().includes(input)
-      ? "block"
-      : "none";
+    const name = p.dataset.name.toLowerCase();
+    p.style.display = name.includes(input) ? "" : "none";
   });
 }
 
 function showAll() {
   document.getElementById("search").value = "";
   document.querySelectorAll(".product").forEach(p => {
-    p.style.display = "block";
+    p.style.display = "";
   });
 }
 </script>
