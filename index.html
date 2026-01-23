@@ -18,7 +18,6 @@ body {
   background: #222;
   color: white;
   padding: 20px;
-  box-sizing: border-box;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -36,7 +35,6 @@ body {
   display: none;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 15px;
 }
 
 .menu-images img {
@@ -99,17 +97,6 @@ body {
     <img src="images/1.jpg">
     <img src="images/2.jpg">
     <img src="images/3.jpg">
-    <img src="images/4.jpg">
-    <img src="images/5.jpg">
-    <img src="images/6.jpg">
-    <img src="images/7.jpg">
-    <img src="images/8.jpg">
-    <img src="images/9.jpg">
-    <img src="images/10.jpg">
-    <img src="images/11.jpg">
-    <img src="images/12.jpg">
-    <img src="images/13.jpg">
-    <img src="images/14.jpg">
   </div>
 
   <div class="menu-title" onclick="toggleMenu('porMenu'); showCategory('porcelain')">
@@ -118,28 +105,27 @@ body {
   <div class="menu-images" id="porMenu">
     <img src="images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg">
     <img src="images/z7460526998789_9ab36461b976f9d617cdd7320e755340.jpg">
-    <img src="images/z7460527035866_b35b6fac8e22877db82e150f6b4a3dc1.jpg">
-    <img src="images/z7460527062680_d486501e4fb676dd6890017f14722022.jpg">
-    <img src="images/z7460527082478_4c369bcf24ff7bae41d3c2968a789af9.jpg">
   </div>
 
 </div>
 
 <!-- ===== MAIN ===== -->
 <div class="content">
+
 <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+
 <div class="products" id="products"></div>
+
 </div>
 
 <script>
 const productsBox = document.getElementById("products");
 let currentCategory = "";
 
-/* ===== ĐÁ NAMES (KEEP YOURS) ===== */
+/* ===== BRICK NAMES (SAFE) ===== */
 const daNames = [
-  "MH6001","MH6002","MH6003","MH6004","MH6005",
-  "MDL6001","MDL6002","MDL6003","MDL6004","MDL6005",
-  "MDL6006","MDL6007","MDL6008","MDL6009"
+  "MH6024","MECO643","MH6028","MH6025","MH6034","MDL6001",
+  "MDL6002","MDL6003","MH6031","MDL6004","MDL6006","MDL6005"
 ];
 
 /* ===== ADD PRODUCT ===== */
@@ -160,12 +146,19 @@ daNames.forEach((name, i) => {
   addProduct(`images/${i+1}.jpg`, name, "da");
 });
 
-/* ===== CREATE ALL PORCELAIN AUTOMATICALLY ===== */
-document.querySelectorAll("#porMenu img").forEach((img, index) => {
-  addProduct(img.src, `PC600${index+1}`, "porcelain");
+/* ===== CREATE PORCELAIN ===== */
+document.querySelectorAll("#porMenu img").forEach((img, i) => {
+  addProduct(img.src, `PC600${i+1}`, "porcelain");
 });
 
-/* ===== FUNCTIONS ===== */
+/* ===== DEFAULT DISPLAY ===== */
+function showDefault() {
+  document.querySelectorAll(".product").forEach((p, i) => {
+    p.style.display = i < 6 ? "block" : "none";
+  });
+}
+
+/* ===== UI FUNCTIONS ===== */
 function toggleMenu(id) {
   const m = document.getElementById(id);
   m.style.display = m.style.display === "grid" ? "none" : "grid";
@@ -188,6 +181,9 @@ function searchProduct() {
     p.style.display = match ? "block" : "none";
   });
 }
+
+/* ===== RUN DEFAULT ===== */
+showDefault();
 </script>
 
 </body>
