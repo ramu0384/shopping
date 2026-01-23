@@ -1,156 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Shop</title>
+<meta charset="UTF-8">
+<title>My Shop</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  display: flex;
+}
 
-    /* SIDEBAR */
-    .sidebar {
-      width: 220px;
-      background: #222;
-      color: white;
-      height: 100vh;
-      padding: 20px;
-    }
+/* ===== LEFT MENU ===== */
+.sidebar {
+  width: 220px;
+  background: #222;
+  color: white;
+  padding: 20px;
+}
 
-    .menu-item {
-      cursor: pointer;
-      margin: 15px 0;
-      font-weight: bold;
-    }
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-    .submenu {
-      margin-left: 15px;
-      display: none;
-      font-size: 14px;
-    }
+.menu-item {
+  cursor: pointer;
+  margin: 10px 0;
+}
 
-    /* MAIN */
-    .main {
-      flex: 1;
-      padding: 30px;
-    }
+.submenu {
+  margin-left: 15px;
+  display: none;
+}
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+.submenu div {
+  cursor: pointer;
+  color: #ccc;
+  margin: 6px 0;
+}
 
-    .product {
-      background: white;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
+.submenu div:hover {
+  color: white;
+}
 
-    .product img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+/* ===== MAIN CONTENT ===== */
+.content {
+  flex: 1;
+  padding: 30px;
+}
 
-    .price {
-      color: green;
-      font-weight: bold;
-    }
+/* Search */
+#search {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
 
-    /* MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-    }
+/* Product grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
 
-    .zoom-wrapper {
-      width: 500px;
-      height: 500px;
-      overflow: hidden;
-      background: white;
-      border-radius: 12px;
-    }
+/* Product card */
+.product {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+}
 
-    .zoom-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.05s linear;
-    }
-  </style>
+/* ===== HOVER ZOOM IMAGE ===== */
+.image-box {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.1s;
+}
+
+.image-box:hover img {
+  transform: scale(1.8);
+}
+
+.image-box {
+  position: relative;
+}
+
+.image-box:hover img {
+  transform-origin: center;
+}
+
+/* Price */
+.price {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+</style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
-  <div class="menu-item" onclick="toggleMenu('A')">A. Cubing Gear</div>
-  <div class="submenu" id="A">
-    <div>A1. Cubing Mat</div>
-    <div>A2. Speed Cube</div>
+  <h2>Menu</h2>
+
+  <div class="menu-item" onclick="toggleMenu('a')">A</div>
+  <div class="submenu" id="a">
+    <div onclick="filterProducts('a1')">a1</div>
+    <div onclick="filterProducts('a2')">a2</div>
+    <div onclick="filterProducts('a3')">a3</div>
+  </div>
+
+  <div class="menu-item" onclick="toggleMenu('b')">B</div>
+  <div class="submenu" id="b">
+    <div onclick="filterProducts('b1')">b1</div>
+    <div onclick="filterProducts('b2')">b2</div>
+    <div onclick="filterProducts('b3')">b3</div>
   </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-  <div class="products">
+<!-- ===== CONTENT ===== -->
+<div class="content">
 
-    <div class="product">
-      <img src="images/1.webp" onclick="openZoom(this)">
-      <h3>A1. Cubing Mat</h3>
+  <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+
+  <div class="products" id="products">
+
+    <div class="product" data-name="cubing mat" data-category="a1">
+      <div class="image-box">
+        <img src="images/3.jpg">
+      </div>
+      <h3>Cubing Mat</h3>
       <p class="price">169k</p>
     </div>
 
-  </div>
-</div>
+    <div class="product" data-name="speed cube" data-category="a2">
+      <div class="image-box">
+        <img src="images/1.webp">
+      </div>
+      <h3>Speed Cube</h3>
+      <p class="price">250k</p>
+    </div>
 
-<!-- MODAL -->
-<div class="modal" id="zoomModal" onclick="closeZoom()">
-  <div class="zoom-wrapper" onclick="event.stopPropagation()">
-    <img id="zoomImg" onmousemove="moveZoom(event)">
+    <div class="product" data-name="timer" data-category="b1">
+      <div class="image-box">
+        <img src="images/2.jpg">
+      </div>
+      <h3>Cube Timer</h3>
+      <p class="price">300k</p>
+    </div>
+
   </div>
+
 </div>
 
 <script>
-  function toggleMenu(id) {
-    const m = document.getElementById(id);
-    m.style.display = m.style.display === "block" ? "none" : "block";
-  }
+function toggleMenu(id) {
+  let menu = document.getElementById(id);
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
 
-  function openZoom(img) {
-    const zoomImg = document.getElementById("zoomImg");
-    zoomImg.src = img.src;
-    zoomImg.style.transform = "scale(1)";
-    document.getElementById("zoomModal").style.display = "flex";
-  }
+function filterProducts(category) {
+  let products = document.querySelectorAll(".product");
+  products.forEach(p => {
+    p.style.display = p.dataset.category === category ? "block" : "none";
+  });
+}
 
-  function closeZoom() {
-    document.getElementById("zoomModal").style.display = "none";
-  }
+function searchProduct() {
+  let input = document.getElementById("search").value.toLowerCase();
+  let products = document.querySelectorAll(".product");
 
-  function moveZoom(e) {
-    const img = e.target;
-    const rect = img.getBoundingClientRect();
+  products.forEach(p => {
+    let name = p.dataset.name;
+    p.style.display = name.includes(input) ? "block" : "none";
+  });
+}
 
-    const x = (e.clientX - rect.left) / rect.width * 100;
-    const y = (e.clientY - rect.top) / rect.height * 100;
-
+/* ===== MOUSE FOLLOW ZOOM ===== */
+document.querySelectorAll('.image-box').forEach(box => {
+  box.addEventListener('mousemove', e => {
+    const img = box.querySelector('img');
+    const rect = box.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
     img.style.transformOrigin = `${x}% ${y}%`;
-    img.style.transform = "scale(2)";
-  }
+  });
+});
 </script>
 
 </body>
