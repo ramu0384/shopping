@@ -1,179 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>My Shop</title>
+  <meta charset="UTF-8">
+  <title>Product List</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  background: #f4f4f4;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
 
-/* ===== SIDEBAR ===== */
-.sidebar {
-  width: 240px;
-  background: #222;
-  color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-}
+    .container {
+      display: flex;
+    }
 
-.menu-title {
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
+    /* LEFT SIDE (FILTER / MENU) */
+    .sidebar {
+      width: 250px;
+      background: #fff;
+      padding: 15px;
+      border-right: 1px solid #ddd;
+    }
 
-.menu-images {
-  display: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
+    .sidebar h2 {
+      margin-top: 0;
+    }
 
-.menu-images img {
-  width: 100%;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-  cursor: pointer;
-}
+    /* RIGHT SIDE (PRODUCTS) */
+    .products {
+      flex: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
 
-/* ===== CONTENT ===== */
-.content {
-  flex: 1;
-  padding: 30px;
-}
+    .product {
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
 
-#search {
-  width: 300px;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 25px;
-}
+    .product img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
 
-/* ===== PRODUCTS GRID ===== */
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
+    .product h3 {
+      margin: 10px 0 5px;
+    }
 
-.product {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  text-align: center;
-}
+    .price {
+      color: #e53935;
+      font-weight: bold;
+    }
 
-.product img {
-  width: 100%;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.product h3 {
-  margin: 10px 0 5px;
-}
-
-.price {
-  color: green;
-  font-weight: bold;
-}
-</style>
+    /* REMOVE LINK STYLE */
+    .product a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== LEFT MENU ===== -->
-<div class="sidebar">
-  <div class="menu-title" onclick="toggleMenu()">Đá 60x60</div>
+<div class="container">
 
-  <div class="menu-images" id="stoneMenu">
-    <img src="images/1.jpg" onclick="showAll()">
-    <img src="images/2.jpg" onclick="showAll()">
-    <img src="images/3.jpg" onclick="showAll()">
-    <img src="images/4.jpg" onclick="showAll()">
-    <img src="images/5.jpg" onclick="showAll()">
-    <img src="images/6.jpg" onclick="showAll()">
-    <img src="images/7.jpg" onclick="showAll()">
-    <img src="images/8.jpg" onclick="showAll()">
-    <img src="images/9.jpg" onclick="showAll()">
-    <img src="images/10.jpg" onclick="showAll()">
-    <img src="images/11.jpg" onclick="showAll()">
-    <img src="images/12.jpg" onclick="showAll()">
-    <img src="images/13.jpg" onclick="showAll()">
-    <img src="images/14.jpg" onclick="showAll()">
+  <!-- LEFT SIDE -->
+  <div class="sidebar">
+    <h2>Categories</h2>
+    <p>• Bags</p>
+    <p>• Shoes</p>
+    <p>• Accessories</p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="products">
+
+    <!-- PRODUCT 1 -->
+    <div class="product" data-name="MH6024">
+      <a href="images/1.jpg" target="_blank">
+        <img src="images/1.jpg" alt="MH6024">
+      </a>
+      <h3>MH6024</h3>
+      <p class="price">160k</p>
+    </div>
+
+    <!-- PRODUCT 2 -->
+    <div class="product" data-name="MH6025">
+      <a href="images/2.jpg" target="_blank">
+        <img src="images/2.jpg" alt="MH6025">
+      </a>
+      <h3>MH6025</h3>
+      <p class="price">170k</p>
+    </div>
+
+    <!-- PRODUCT 3 -->
+    <div class="product" data-name="MH6026">
+      <a href="images/3.jpg" target="_blank">
+        <img src="images/3.jpg" alt="MH6026">
+      </a>
+      <h3>MH6026</h3>
+      <p class="price">180k</p>
+    </div>
+
+    <!-- PRODUCT 4 -->
+    <div class="product" data-name="MH6027">
+      <a href="images/4.jpg" target="_blank">
+        <img src="images/4.jpg" alt="MH6027">
+      </a>
+      <h3>MH6027</h3>
+      <p class="price">190k</p>
+    </div>
+
   </div>
 </div>
-
-<!-- ===== MAIN CONTENT ===== -->
-<div class="content">
-
-<input id="search" placeholder="Search product..." onkeyup="searchProduct()">
-
-<div class="products">
-
-  <!-- PRODUCT TEMPLATE -->
-  <div class="product" data-name="MH6024">
-    <a href="images/1.jpg" target="_blank">
-      <img src="images/1.jpg">
-    </a>
-    <h3>MH6024</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="MECO643">
-    <a href="images/2.jpg" target="_blank">
-      <img src="images/2.jpg">
-    </a>
-    <h3>MECO643</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <div class="product" data-name="MDL6001">
-    <a href="images/3.jpg" target="_blank">
-      <img src="images/3.jpg">
-    </a>
-    <h3>MDL6001</h3>
-    <p class="price">160k</p>
-  </div>
-
-  <!-- repeat same pattern for others -->
-
-</div>
-</div>
-
-<script>
-function toggleMenu() {
-  const menu = document.getElementById("stoneMenu");
-  menu.style.display = menu.style.display === "grid" ? "none" : "grid";
-}
-
-function searchProduct() {
-  const input = document.getElementById("search").value.toLowerCase();
-  document.querySelectorAll(".product").forEach(p => {
-    const name = p.dataset.name.toLowerCase();
-    p.style.display = name.includes(input) ? "" : "none";
-  });
-}
-
-function showAll() {
-  document.getElementById("search").value = "";
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display = "";
-  });
-}
-</script>
 
 </body>
 </html>
