@@ -3,16 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>My Shop</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
+/* ===== BASE ===== */
 body {
   margin: 0;
+  font-family: Arial, sans-serif;
   display: flex;
   background: #f4f4f4;
 }
@@ -20,106 +16,146 @@ body {
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 240px;
-  background: #1f1f1f;
+  background: #222;
   color: white;
-  padding: 15px;
-  height: 100vh;
-  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
   position: sticky;
   top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .menu-title {
-  font-size: 24px; /* BIG TEXT */
-  font-weight: bold;
-  margin: 15px 0;
+  font-size: 22px;
+  font-weight: 700;
   cursor: pointer;
+  margin: 18px 0 12px;
 }
 
-/* sidebar images */
+.menu-title:hover {
+  color: #ffd54f;
+}
+
 .menu-images {
   display: none;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .menu-images img {
   width: 100%;
-  border-radius: 4px;
-  cursor: pointer;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
-/* ===== MAIN ===== */
-.main {
+/* ===== CONTENT ===== */
+.content {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
 }
 
-.search-box {
-  margin-bottom: 15px;
-}
-
-.search-box input {
-  width: 100%;
+#search {
+  width: 300px;
   padding: 10px;
   font-size: 16px;
-}
-
-/* PRODUCT GRID */
-.products {
+  margin-bottom: 25px;
   display: none;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
 }
 
-.card {
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
+/* ===== WELCOME ===== */
+.welcome {
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 120px;
+  color: #555;
 }
 
-.card img {
-  width: 100%;
-  border-radius: 6px;
-  cursor: pointer;
+.welcome h1 {
+  font-size: 36px;
 }
 
-.card-name {
-  margin-top: 8px;
-  font-weight: bold;
+.welcome p {
+  font-size: 18px;
 }
 
-/* IMAGE MODAL */
-.modal {
+/* ===== PRODUCTS ===== */
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product {
   display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-.modal img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 8px;
+.product img {
+  width: 100%;
+  border-radius: 10px;
 }
 
-/* ===== MOBILE ===== */
+.product h3 {
+  font-size: 16px;
+  margin: 10px 0 0;
+}
+
+/* ===== MOBILE FIX (FINAL) ===== */
 @media (max-width: 768px) {
+
   .sidebar {
-    width: 200px;
+    width: 150px;
+    padding: 10px;
   }
 
   .menu-title {
-    font-size: 24px; /* SAME SIZE ON MOBILE */
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .menu-images img {
+    height: 40px;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  #search {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .welcome {
+    margin-top: 60px;
+  }
+
+  .welcome h1 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .welcome p {
+    font-size: 13px;
   }
 
   .products {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .product {
+    padding: 10px;
+  }
+
+  .product h3 {
+    font-size: 13px;
   }
 }
 </style>
@@ -130,75 +166,132 @@ body {
 <!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
 
-  <div class="menu-title" onclick="toggleCategory('da')">Đá 60x60</div>
-  <div class="menu-images" id="da-menu">
-    <img src="images/da1.jpg">
-    <img src="images/da2.jpg">
-    <img src="images/da3.jpg">
+  <div class="menu-title" onclick="toggleMenu('daMenu'); showCategory('da')">
+    Đá 60x60
+  </div>
+  <div class="menu-images" id="daMenu">
+    <img src="images/1.jpg">
+    <img src="images/2.jpg">
+    <img src="images/3.jpg">
+    <img src="images/4.jpg">
+    <img src="images/5.jpg">
+    <img src="images/6.jpg">
+    <img src="images/7.jpg">
+    <img src="images/8.jpg">
+    <img src="images/9.jpg">
+    <img src="images/10.jpg">
+    <img src="images/11.jpg">
+    <img src="images/12.jpg">
+    <img src="images/13.jpg">
+    <img src="images/14.jpg">
   </div>
 
-  <div class="menu-title" onclick="toggleCategory('porcelan')">Porcelan 60x60</div>
-  <div class="menu-images" id="porcelan-menu">
-    <img src="images/por1.jpg">
-    <img src="images/por2.jpg">
-    <img src="images/por3.jpg">
+  <div class="menu-title" onclick="toggleMenu('porMenu'); showCategory('porcelain')">
+    Porcelan 60x60
   </div>
-
+  <div class="menu-images" id="porMenu">
+    <img src="images/z7460526971887_7a31d5fadb48f35d1bb8b8a232c6bbb4.jpg">
+    <img src="images/z7460526998789_9ab36461b976f9d617cdd7320e755340.jpg">
+    <img src="images/z7460527035866_b35b6fac8e22877db82e150f6b4a3dc1.jpg">
+    <img src="images/z7460527062680_d486501e4fb676dd6890017f14722022.jpg">
+    <img src="images/z7460527082478_4c369bcf24ff7bae41d3c2968a789af9.jpg">
+    <img src="images/z7460527107641_8ed8260fc4dd1fb6e309a3a72a46a1c9.jpg">
+    <img src="images/z7460527131360_e8f980a722358d8d82a9577e7eaf3107.jpg">
+    <img src="images/z7460527171894_4fcc2eb0d1d45592e643816da1cfe56e.jpg">
+    <img src="images/z7460527197729_98123ca21bdc048540a80f24af193c7a.jpg">
+    <img src="images/z7460527218181_f31b31970e5dac7d12ae317715a9baba.jpg">
+    <img src="images/z7460527249167_0c986ae25dbdee5639e83e47bd98b55d.jpg">
+    <img src="images/z7460527264510_e2367fbf929754bc5f2585822b441c29.jpg">
+    <img src="images/z7460527355781_505905f62e37124f5a7098926a47394f.jpg">
+    <img src="images/z7460527474086_f29f7e6f7893ab73d6738110466e1fb8.jpg">
+    <img src="images/z7460531323001_9a2f9e4928030e41abf7c7dd956b9f20.jpg">
+    <img src="images/z7460531342847_beaa8fc3d1505fe8afbf420f50351148.jpg">
+    <img src="images/z7460531376490_657aafe0b37d91be7e5283d4844ff62c.jpg">
+    <img src="images/z7460531404873_053fd5bae6d52cfb5106df81eec30445.jpg">
+    <img src="images/z7460531421369_b57dcfe2a298cbf9efbc4b904d68e8fd.jpg">
+    <img src="images/z7460531453860_88d6036c78cf7c2ab550dbc2e51610ba.jpg">
+    <img src="images/z7460531469734_2dcee0710ab9264b54f72d273d773c97.jpg">
+    <img src="images/z7460531641120_e0a414d7e4b3bfa05d789c2ab551916f.jpg">
+    <img src="images/z7460531665254_50332ed6084451983298afa37e402352.jpg">
+    <img src="images/z7460531691456_77468203ed4b327c7b9b11251e7fb625.jpg">
+    <img src="images/z7460531717625_5efca99465e2aa16c21c950e29f90daf.jpg">
+    <img src="images/z7460531737265_5d98c0f0a9d7c383994da4bb9f7a9df6.jpg">
+    <img src="images/z7460531761219_1472340da7eeec19c1175b1b4c615b77.jpg">
+    <img src="images/z7460531802649_6b3acf252b951a5c12f5c6f7277fed6f.jpg">
+    <img src="images/z7460531836928_719837e4c4c68e8d8e56514696074ad1.jpg">
+    <img src="images/z7460531866417_c43d43cde548311c2c16042737613123.jpg">
+    <img src="images/z7460531885669_b683f61c551491e9b663bd0813c43cdb.jpg">
+    <img src="images/z7460531911165_66022e3670326667954cde1f33ed21fa.jpg">
+    <img src="images/z7460531940952_adf679760d9bf4aa2ad90394c4d140fa.jpg">
+  </div>
 </div>
 
 <!-- ===== MAIN ===== -->
-<div class="main">
+<div class="content">
 
-  <div class="search-box">
-    <input type="text" id="search" placeholder="Search product..." onkeyup="searchProduct()">
+  <div class="welcome" id="welcome">
+    <h1>VLXD & TTNT ĐẤT THÀNH</h1>
+    <p>Rất Hân Hạnh Được Phục Vụ Quý Khách! 👋</p>
   </div>
 
-  <!-- ĐÁ PRODUCTS -->
-  <div class="products" id="da">
-    <div class="card"><img src="images/MH6024.jpg" onclick="openModal(this.src)"><div class="card-name">MH6024</div></div>
-    <div class="card"><img src="images/MH6025.jpg" onclick="openModal(this.src)"><div class="card-name">MH6025</div></div>
-    <div class="card"><img src="images/MH6028.jpg" onclick="openModal(this.src)"><div class="card-name">MH6028</div></div>
-    <div class="card"><img src="images/MDL6001.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6001</div></div>
-    <div class="card"><img src="images/MDL6002.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6002</div></div>
-  </div>
+  <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
+  <div class="products" id="products"></div>
 
-  <!-- PORCELAN PRODUCTS -->
-  <div class="products" id="porcelan">
-    <div class="card"><img src="images/MDL6003.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6003</div></div>
-    <div class="card"><img src="images/MDL6004.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6004</div></div>
-    <div class="card"><img src="images/MDL6005.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6005</div></div>
-    <div class="card"><img src="images/MDL6006.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6006</div></div>
-    <div class="card"><img src="images/MDL6007.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6007</div></div>
-    <div class="card"><img src="images/MDL6008.jpg" onclick="openModal(this.src)"><div class="card-name">MDL6008</div></div>
-  </div>
-
-</div>
-
-<!-- IMAGE MODAL -->
-<div class="modal" id="modal" onclick="closeModal()">
-  <img id="modal-img">
 </div>
 
 <script>
-function toggleCategory(id) {
-  document.querySelectorAll('.products').forEach(p => p.style.display = 'none');
-  document.getElementById(id).style.display = 'grid';
+const productsBox = document.getElementById("products");
+const welcomeBox = document.getElementById("welcome");
+const searchBox = document.getElementById("search");
+let currentCategory = "";
+
+function addProduct(img, name, cat) {
+  const d = document.createElement("div");
+  d.className = "product";
+  d.dataset.category = cat;
+  d.dataset.name = name.toLowerCase();
+  d.innerHTML = `<img src="${img}"><h3>${name}</h3>`;
+  productsBox.appendChild(d);
 }
 
-function searchProduct() {
-  const keyword = document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.display = card.innerText.toLowerCase().includes(keyword) ? '' : 'none';
+/* ĐÁ names (kept) */
+const daNames = [
+  "MH6024","MECO643","MH6028","MH6025","MH6034",
+  "MDL6001","MDL6002","MDL6003","MH6031",
+  "MDL6004","MDL6005","MDL6006","MDL6007","MDL6008"
+];
+
+daNames.forEach((name, i) => {
+  addProduct(`images/${i+1}.jpg`, name, "da");
+});
+
+/* PORCELAN */
+document.querySelectorAll("#porMenu img").forEach((img, i) => {
+  addProduct(img.src, `POR-${i+1}`, "porcelain");
+});
+
+function toggleMenu(id) {
+  const m = document.getElementById(id);
+  m.style.display = m.style.display === "grid" ? "none" : "grid";
+}
+
+function showCategory(cat) {
+  currentCategory = cat;
+  welcomeBox.style.display = "none";
+  searchBox.style.display = "block";
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = p.dataset.category === cat ? "block" : "none";
   });
 }
 
-function openModal(src) {
-  document.getElementById('modal').style.display = 'flex';
-  document.getElementById('modal-img').src = src;
-}
-
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
+function searchProduct() {
+  const k = searchBox.value.toLowerCase();
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display =
+      p.dataset.category === currentCategory &&
+      p.dataset.name.includes(k)
+      ? "block" : "none";
+  });
 }
 </script>
 
