@@ -25,11 +25,17 @@ body {
   overflow-y: auto;
 }
 
+/* 🔥 BIGGER MENU TEXT */
 .menu-title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 22px;      /* BIGGER */
+  font-weight: 700;
   cursor: pointer;
-  margin: 15px 0 10px;
+  margin: 18px 0 12px;
+  line-height: 1.3;
+}
+
+.menu-title:hover {
+  color: #ffd54f;
 }
 
 .menu-images {
@@ -69,7 +75,6 @@ body {
 
 .welcome h1 {
   font-size: 36px;
-  margin-bottom: 10px;
 }
 
 .welcome p {
@@ -168,10 +173,9 @@ body {
 <!-- ===== MAIN CONTENT ===== -->
 <div class="content">
 
-  <!-- WELCOME -->
   <div class="welcome" id="welcome">
     <h1>VLXD & TTNT ĐẮT THÀNH</h1>
-    <p>Rất Hân Hạnh Được Phục Vụ Quý Khách!👋</p>
+    <p>Rất Hân Hạnh Được Phục Vụ Quý Khách! 👋</p>
   </div>
 
   <input id="search" placeholder="Search product..." onkeyup="searchProduct()">
@@ -185,58 +189,48 @@ const welcomeBox = document.getElementById("welcome");
 const searchBox = document.getElementById("search");
 let currentCategory = "";
 
-/* ===== ADD PRODUCT ===== */
 function addProduct(img, name, cat) {
   const d = document.createElement("div");
   d.className = "product";
   d.dataset.category = cat;
   d.dataset.name = name.toLowerCase();
-  d.innerHTML = `
-    <img src="${img}">
-    <h3>${name}</h3>
-  `;
+  d.innerHTML = `<img src="${img}"><h3>${name}</h3>`;
   productsBox.appendChild(d);
 }
 
-/* ===== ĐÁ ===== */
+/* ĐÁ */
 const daNames = [
   "MH6024","MECO643","MH6028","MH6025","MH6034",
   "MDL6001","MDL6002","MDL6003","MH6031",
   "MDL6004","MDL6005","MDL6006","MDL6007","MDL6008"
 ];
+daNames.forEach((n,i)=>addProduct(`images/${i+1}.jpg`,n,"da"));
 
-daNames.forEach((name, i) => {
-  addProduct(`images/${i+1}.jpg`, name, "da");
-});
+/* PORCELAN */
+document.querySelectorAll("#porMenu img")
+  .forEach((img,i)=>addProduct(img.src,`POR-${i+1}`,"porcelain"));
 
-/* ===== PORCELAN ===== */
-document.querySelectorAll("#porMenu img").forEach((img, i) => {
-  addProduct(img.src, `POR-${i+1}`, "porcelain");
-});
-
-/* ===== FUNCTIONS ===== */
-function toggleMenu(id) {
-  const m = document.getElementById(id);
-  m.style.display = m.style.display === "grid" ? "none" : "grid";
+function toggleMenu(id){
+  const m=document.getElementById(id);
+  m.style.display=m.style.display==="grid"?"none":"grid";
 }
 
-function showCategory(cat) {
-  currentCategory = cat;
-  welcomeBox.style.display = "none";
-  searchBox.style.display = "block";
-
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display = p.dataset.category === cat ? "block" : "none";
+function showCategory(cat){
+  currentCategory=cat;
+  welcomeBox.style.display="none";
+  searchBox.style.display="block";
+  document.querySelectorAll(".product").forEach(p=>{
+    p.style.display=p.dataset.category===cat?"block":"none";
   });
 }
 
-function searchProduct() {
-  const keyword = searchBox.value.toLowerCase();
-  document.querySelectorAll(".product").forEach(p => {
-    p.style.display =
-      p.dataset.category === currentCategory &&
-      p.dataset.name.includes(keyword)
-      ? "block" : "none";
+function searchProduct(){
+  const k=searchBox.value.toLowerCase();
+  document.querySelectorAll(".product").forEach(p=>{
+    p.style.display=
+      p.dataset.category===currentCategory &&
+      p.dataset.name.includes(k)
+      ?"block":"none";
   });
 }
 </script>
