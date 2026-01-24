@@ -16,55 +16,58 @@ body {
   background: #f4f4f4;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+/* ===== MOBILE FINAL FIX ===== */
 @media (max-width: 768px) {
 
-  body {
-    flex-direction: row;
+  /* Sidebar slimmer */
+  .sidebar {
+    width: 150px;
+    padding: 10px;
   }
 
-  .sidebar {
-    width: 180px;
+  /* Menu title smaller + no wrap */
+  .menu-title {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Sidebar thumbnails smaller */
+  .menu-images img {
+    height: 40px;
+  }
+
+  /* Main content tighter */
+  .content {
     padding: 12px;
   }
 
-  .menu-title {
-    font-size: 16px;
-    margin: 12px 0 8px;
-  }
-
-  .menu-images {
-    gap: 6px;
-  }
-
-  .menu-images img {
-    height: 45px;
-  }
-
-  .content {
-    padding: 15px;
-  }
-
-  #search {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  .products {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .product h3 {
-    font-size: 14px;
+  /* Welcome text MUCH smaller */
+  .welcome {
+    margin-top: 60px;
   }
 
   .welcome h1 {
-    font-size: 24px;
+    font-size: 20px;
+    line-height: 1.2;
   }
 
   .welcome p {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  /* Products: 2 columns, tighter cards */
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .product {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .product h3 {
+    font-size: 13px;
   }
 }
 
